@@ -6,10 +6,24 @@ import { Process, Services } from "@/components/site/services";
 import { Industries, Work } from "@/components/site/work";
 import { Contact, Footer } from "@/components/site/contact";
 import { EMAIL, CAL_URL, WHATSAPP_URL } from "@/lib/site";
+import { useSmoothScroll } from "@/hooks/use-smooth-scroll";
 
-const SITE_TITLE = "ZehanX Tech — AI Systems, Agentic Software & LLM Training";
+const SITE_TITLE = "ZehanX Tech — AI Systems, Agentic AI Software & LLM Training Company";
 const SITE_DESCRIPTION =
-  "ZehanX Tech is an ML and data company building AI systems, agentic and enterprise software, and training LLMs for businesses and industries.";
+  "ZehanX Tech builds production AI systems, agentic AI software, enterprise platforms and custom-trained LLMs for businesses and industries — ML consulting, LLM fine-tuning, data engineering and MLOps, delivered end to end.";
+
+const SITE_KEYWORDS = [
+  "AI development company",
+  "machine learning consulting",
+  "agentic AI software",
+  "LLM training services",
+  "LLM fine-tuning",
+  "enterprise AI solutions",
+  "custom AI systems",
+  "data engineering",
+  "MLOps services",
+  "AI integration for business",
+];
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -17,6 +31,7 @@ export const Route = createFileRoute("/")({
     meta: [
       { title: SITE_TITLE },
       { name: "description", content: SITE_DESCRIPTION },
+      { name: "keywords", content: SITE_KEYWORDS.join(", ") },
       { property: "og:title", content: SITE_TITLE },
       { property: "og:description", content: SITE_DESCRIPTION },
       { property: "og:url", content: "/" },
@@ -33,18 +48,42 @@ export const Route = createFileRoute("/")({
           "@context": "https://schema.org",
           "@type": "ProfessionalService",
           name: "ZehanX Tech",
+          alternateName: "ZehanX Technologies",
+          slogan: "Machine intelligence, built for business",
           description: SITE_DESCRIPTION,
           email: EMAIL,
           telephone: "+92-333-8188722",
-          sameAs: [CAL_URL, WHATSAPP_URL],
+          areaServed: "Worldwide",
           knowsAbout: [
             "Machine Learning",
             "Artificial Intelligence",
             "Agentic AI",
+            "AI Agents",
             "Large Language Models",
+            "LLM Fine-Tuning",
+            "Retrieval-Augmented Generation",
             "Data Engineering",
+            "Feature Stores",
+            "Vector Databases",
+            "MLOps",
+            "Model Deployment",
+            "Computer Vision",
+            "Predictive Analytics",
             "Enterprise Software",
           ],
+          sameAs: [CAL_URL, WHATSAPP_URL],
+          hasOfferCatalog: {
+            "@type": "OfferCatalog",
+            name: "AI & Data Services",
+            itemListElement: [
+              { "@type": "Offer", itemOffered: { "@type": "Service", name: "AI Systems Development" } },
+              { "@type": "Offer", itemOffered: { "@type": "Service", name: "Agentic AI Software" } },
+              { "@type": "Offer", itemOffered: { "@type": "Service", name: "Enterprise Software" } },
+              { "@type": "Offer", itemOffered: { "@type": "Service", name: "LLM Training & Fine-Tuning" } },
+              { "@type": "Offer", itemOffered: { "@type": "Service", name: "Data Engineering" } },
+              { "@type": "Offer", itemOffered: { "@type": "Service", name: "MLOps & Deployment" } },
+            ],
+          },
         }),
       },
     ],
@@ -52,6 +91,8 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
+  useSmoothScroll();
+
   return (
     <div className="min-h-screen w-full bg-background text-foreground">
       <Navbar />

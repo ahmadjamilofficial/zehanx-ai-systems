@@ -8,22 +8,22 @@ const PROJECTS = [
     img: workAgents,
     alt: "Abstract network of connected agent nodes",
     tag: "AGENTIC AI",
-    title: "Agent Operations Platform",
-    desc: "A fleet of coordinated agents handling tickets, research and follow-ups across tools — with humans in control of every critical step.",
+    title: "AXON — Multi-Agent Orchestration Layer",
+    desc: "A supervised agent fabric where planner, tool-use and memory agents decompose objectives, invoke enterprise APIs and execute long-horizon workflows — with human-in-the-loop checkpoints gating every critical action.",
   },
   {
     img: workLlm,
     alt: "Abstract streams of glowing token particles",
     tag: "LLM TRAINING",
-    title: "Domain Language Model",
-    desc: "A large language model fine-tuned on industry documents and workflows, deployed privately so sensitive data never leaves the building.",
+    title: "CORTEX-D — Private Domain LLM",
+    desc: "A foundation model adapted with SFT and LoRA on proprietary industry corpora, preference-aligned and served through an on-prem inference endpoint — so sensitive data never leaves your infrastructure.",
   },
   {
     img: workEnterprise,
     alt: "Layered dark data infrastructure with red conduits",
     tag: "DATA PLATFORM",
-    title: "Enterprise Data Platform",
-    desc: "Pipelines, warehouse and reporting layers unified into one system that every team and every model reads from.",
+    title: "DATAFORGE — Feature & Vector Platform",
+    desc: "Streaming ingestion, a governed feature store and a low-latency vector index powering retrieval-augmented generation — one real-time substrate every model, agent and dashboard reads from.",
   },
 ];
 
