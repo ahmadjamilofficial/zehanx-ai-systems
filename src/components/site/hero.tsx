@@ -1,14 +1,43 @@
+import { useEffect, useRef } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { CAL_URL, HERO_VIDEO_URL } from "@/lib/site";
 
 export function Hero() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  // Parallax: the hero footage drifts slower than the page as you scroll.
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const video = videoRef.current;
+    if (!video) return;
+
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const y = window.scrollY;
+      video.style.transform = `translate3d(0, ${y * 0.35}px, 0) scale(1.25)`;
+    };
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(update);
+    };
+
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, []);
+
   return (
     <section
       id="top"
       className="relative flex min-h-screen w-full flex-col overflow-hidden bg-background text-foreground"
     >
       <video
-        className="absolute inset-0 h-full w-full object-cover lg:scale-[1.2]"
+        ref={videoRef}
+        className="absolute inset-0 h-full w-full object-cover will-change-transform"
+        style={{ transform: "scale(1.25)" }}
         src={HERO_VIDEO_URL}
         autoPlay
         muted
