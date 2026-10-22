@@ -16,7 +16,9 @@ export function Reveal({ children, className = "", delay = 0 }: RevealProps) {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
+          // Reveal when visible — or when it was scrolled past entirely, so
+          // fast or smoothed scrolling can never leave content hidden.
+          if (entry.isIntersecting || entry.boundingClientRect.top < 0) {
             entry.target.classList.add("reveal-visible");
             observer.unobserve(entry.target);
           }
