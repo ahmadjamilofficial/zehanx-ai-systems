@@ -14,7 +14,8 @@ export function Hero() {
     let raf = 0;
     const update = () => {
       raf = 0;
-      const y = window.scrollY;
+      const y =
+        (document.scrollingElement?.scrollTop ?? 0) || window.scrollY;
       video.style.transform = `translate3d(0, ${y * 0.35}px, 0) scale(1.25)`;
     };
     const onScroll = () => {

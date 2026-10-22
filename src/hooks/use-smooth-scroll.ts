@@ -15,8 +15,13 @@ export function useSmoothScroll() {
     let raf = 0;
     let active = false;
 
+    // Use the document's real scrolling element so this works regardless of
+    // how the host environment wires scrolling.
+    const scroller = () =>
+      document.scrollingElement ?? document.documentElement;
+
     const maxScroll = () =>
-      document.documentElement.scrollHeight - window.innerHeight;
+      scroller().scrollHeight - window.innerHeight;
 
     const loop = () => {
       current += (target - current) * 0.075;
@@ -26,15 +31,17 @@ export function useSmoothScroll() {
       } else {
         raf = requestAnimationFrame(loop);
       }
-      window.scrollTo(0, current);
+      // "instant" is critical: the page CSS sets scroll-behavior: smooth,
+      // which would re-animate every frame and cause erratic jumps.
+      scroller().scrollTo({ top: current, behavior: "instant" });
     };
 
     const onWheel = (e: WheelEvent) => {
       if (e.defaultPrevented || e.ctrlKey || e.metaKey) return;
       e.preventDefault();
       if (!active) {
-        current = window.scrollY;
-        target = window.scrollY;
+        current = scroller().scrollTop;
+        target = current;
       }
       const delta =
         e.deltaMode === 1
@@ -52,8 +59,8 @@ export function useSmoothScroll() {
     // Keep in sync when something else scrolls the page (anchors, keyboard).
     const onNativeScroll = () => {
       if (!active) {
-        current = window.scrollY;
-        target = window.scrollY;
+        current = scroller().scrollTop;
+        target = current;
       }
     };
 
