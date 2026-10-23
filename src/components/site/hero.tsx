@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { CAL_URL, HERO_VIDEO_URL } from "@/lib/site";
+import heroPoster from "@/assets/hero-poster.jpg";
 
 export function Hero() {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -40,6 +41,8 @@ export function Hero() {
         className="absolute inset-0 h-full w-full object-cover will-change-transform"
         style={{ transform: "scale(1.25)" }}
         src={HERO_VIDEO_URL}
+        poster={heroPoster}
+        preload="auto"
         autoPlay
         muted
         loop
