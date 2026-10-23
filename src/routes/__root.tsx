@@ -79,7 +79,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "ZehanX Tech — AI Systems, Agentic AI & LLM Training" },
-      { name: "description", content: "AI systems, agentic AI software, enterprise platforms and custom-trained LLMs for businesses and industries. Machine learning consulting, data engineering and MLOps, delivered end to end." },
+      { name: "description", content: "ZehanX Tech builds AI systems, agentic AI software, enterprise platforms and custom-trained LLMs — ML consulting, data engineering and MLOps." },
       { name: "author", content: "ZehanX Tech" },
       { property: "og:site_name", content: "ZehanX Tech" },
       { property: "og:title", content: "ZehanX Tech" },
