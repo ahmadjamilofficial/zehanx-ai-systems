@@ -59,14 +59,16 @@ export function About() {
           <Reveal delay={120}>
             <div className="mt-8 max-w-xl space-y-4 text-sm leading-relaxed text-muted-foreground md:text-base">
               <p>
-                ZehanX Tech designs and builds AI systems end to end — from the
-                data pipelines that feed them, to the models that power them, to
-                the software your teams actually use.
+                ZehanX Tech builds the intelligence behind modern enterprises —
+                AI systems, agentic software, enterprise platforms and the data
+                infrastructure that powers them, from first pipeline to
+                production.
               </p>
               <p>
                 We train and fine-tune large language models on your domain, so
                 the intelligence speaks your industry&apos;s language — not a
-                generic one.
+                generic one. Your data stays yours: private deployments,
+                governed pipelines, models that never leak.
               </p>
               <p>
                 From autonomous agents that run workflows to enterprise platforms

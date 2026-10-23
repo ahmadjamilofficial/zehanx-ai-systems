@@ -46,6 +46,11 @@ export function Services() {
         <h2 className="mt-6 text-3xl font-medium uppercase tracking-wide md:text-5xl">
           WHAT WE <span className="font-pixel text-[1.15em]">BUILD</span>
         </h2>
+        <p className="mt-5 max-w-xl text-sm leading-relaxed text-muted-foreground md:text-base">
+          Six capabilities, one delivery model — we take AI from the first data
+          pull to a system your teams run on, designed, trained, deployed and
+          maintained by the same people.
+        </p>
       </Reveal>
       <div className="mt-12">
         {SERVICES.map((service, i) => (
@@ -105,6 +110,11 @@ export function Process() {
         <h2 className="mt-6 text-3xl font-medium uppercase tracking-wide md:text-5xl">
           HOW IT <span className="font-pixel text-[1.15em]">SHIPS</span>
         </h2>
+        <p className="mt-5 max-w-xl text-sm leading-relaxed text-muted-foreground md:text-base">
+          One disciplined path for every engagement, from a focused proof of
+          concept to a company-wide intelligence platform. You see working
+          software at every stage — not slideware.
+        </p>
       </Reveal>
       <div className="mt-12 grid grid-cols-1 gap-px bg-line sm:grid-cols-2 lg:grid-cols-4">
         {STEPS.map((step, i) => (

@@ -8,9 +8,9 @@ import { Contact, Footer } from "@/components/site/contact";
 import { EMAIL, CAL_URL, WHATSAPP_URL } from "@/lib/site";
 import { useSmoothScroll } from "@/hooks/use-smooth-scroll";
 
-const SITE_TITLE = "ZehanX Tech — AI Systems, Agentic AI Software & LLM Training Company";
+const SITE_TITLE = "ZehanX Tech — AI Systems, Agentic AI & LLM Training";
 const SITE_DESCRIPTION =
-  "ZehanX Tech builds production AI systems, agentic AI software, enterprise platforms and custom-trained LLMs for businesses and industries — ML consulting, LLM fine-tuning, data engineering and MLOps, delivered end to end.";
+  "ZehanX Tech builds AI systems, agentic AI software, enterprise platforms and custom-trained LLMs — ML consulting, data engineering and MLOps.";
 
 const SITE_KEYWORDS = [
   "AI development company",

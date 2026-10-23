@@ -25,7 +25,9 @@ export function Contact() {
       <Reveal delay={100}>
         <p className="mt-6 max-w-xl text-sm leading-relaxed text-muted-foreground md:text-base">
           No forms, no funnels. Reach us directly or book a slot on the calendar
-          — we reply fast.
+          — we reply fast. Tell us what you are trying to automate, predict or
+          understand, and we will tell you honestly whether AI is the right
+          tool for it.
         </p>
       </Reveal>
 
