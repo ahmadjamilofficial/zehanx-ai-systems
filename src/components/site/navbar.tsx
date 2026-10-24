@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, Volume2, VolumeX, X } from "lucide-react";
+import {
+  isSoundEnabled,
+  onSoundEnabledChange,
+  setSoundEnabled,
+} from "@/lib/sounds";
 
 const NAV_LINKS = [
   { label: "ABOUT", href: "#about" },

@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { Navbar } from "@/components/site/navbar";
 import { Hero } from "@/components/site/hero";
@@ -7,6 +8,7 @@ import { Industries, Work } from "@/components/site/work";
 import { Contact, Footer } from "@/components/site/contact";
 import { EMAIL, CAL_URL, WHATSAPP_URL } from "@/lib/site";
 import { useSmoothScroll } from "@/hooks/use-smooth-scroll";
+import { attachSoundTriggers } from "@/lib/sounds";
 
 const SITE_TITLE = "ZehanX Tech — AI Systems, Agentic AI & LLM Training";
 const SITE_DESCRIPTION =
