@@ -6,6 +6,40 @@ import heroPoster from "@/assets/hero-poster.jpg";
 export function Hero() {
   const videoRef = useRef<HTMLVideoElement>(null);
 
+  // Keep the footage playing: some browsers pause muted autoplay videos
+  // (power saving, tab focus changes), which leaves only the poster frame.
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const attempt = () => {
+      const playback = video.play();
+      if (playback) playback.catch(() => {});
+    };
+    const resume = () => {
+      if (video.paused && !video.ended) attempt();
+    };
+
+    attempt();
+    const timer = window.setTimeout(attempt, 250);
+    const onPause = () => window.setTimeout(resume, 60);
+    const onCanPlay = () => resume();
+
+    window.addEventListener("pointerdown", resume);
+    window.addEventListener("touchstart", resume, { passive: true });
+    window.addEventListener("focus", resume);
+    video.addEventListener("pause", onPause);
+    video.addEventListener("canplay", onCanPlay);
+    return () => {
+      window.clearTimeout(timer);
+      window.removeEventListener("pointerdown", resume);
+      window.removeEventListener("touchstart", resume);
+      window.removeEventListener("focus", resume);
+      video.removeEventListener("pause", onPause);
+      video.removeEventListener("canplay", onCanPlay);
+    };
+  }, []);
+
   // Parallax: the hero footage drifts slower than the page as you scroll.
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;

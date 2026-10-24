@@ -93,6 +93,8 @@ export const Route = createFileRoute("/")({
 function Index() {
   useSmoothScroll();
 
+  useEffect(() => attachSoundTriggers(), []);
+
   return (
     <div className="min-h-screen w-full bg-background text-foreground">
       <Navbar />
