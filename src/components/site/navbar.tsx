@@ -33,6 +33,27 @@ export function Logo({ size = 28 }: { size?: number }) {
   );
 }
 
+function SoundToggle() {
+  const [enabled, setEnabled] = useState(true);
+
+  useEffect(() => {
+    setEnabled(isSoundEnabled());
+    return onSoundEnabledChange(setEnabled);
+  }, []);
+
+  return (
+    <button
+      type="button"
+      onClick={() => setSoundEnabled(!enabled)}
+      aria-label={enabled ? "Mute interface sounds" : "Unmute interface sounds"}
+      aria-pressed={enabled}
+      className="p-2 text-foreground transition-opacity hover:opacity-70"
+    >
+      {enabled ? <Volume2 size={16} /> : <VolumeX size={16} />}
+    </button>
+  );
+}
+
 export function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
