@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, Volume2, VolumeX, X } from "lucide-react";
+import {
+  isSoundEnabled,
+  onSoundEnabledChange,
+  setSoundEnabled,
+} from "@/lib/sounds";
 
 const NAV_LINKS = [
   { label: "ABOUT", href: "#about" },
@@ -25,6 +30,27 @@ export function Logo({ size = 28 }: { size?: number }) {
         fill="currentColor"
       />
     </svg>
+  );
+}
+
+function SoundToggle() {
+  const [enabled, setEnabled] = useState(true);
+
+  useEffect(() => {
+    setEnabled(isSoundEnabled());
+    return onSoundEnabledChange(setEnabled);
+  }, []);
+
+  return (
+    <button
+      type="button"
+      onClick={() => setSoundEnabled(!enabled)}
+      aria-label={enabled ? "Mute interface sounds" : "Unmute interface sounds"}
+      aria-pressed={enabled}
+      className="p-2 text-foreground transition-opacity hover:opacity-70"
+    >
+      {enabled ? <Volume2 size={16} /> : <VolumeX size={16} />}
+    </button>
   );
 }
 
@@ -77,14 +103,17 @@ export function Navbar() {
               </a>
             ))}
           </nav>
-          <button
-            type="button"
-            onClick={() => setOpen(true)}
-            aria-label="Open menu"
-            className="p-2 text-foreground transition-opacity hover:opacity-70 md:hidden"
-          >
-            <Menu size={24} />
-          </button>
+          <div className="flex items-center gap-1">
+            <SoundToggle />
+            <button
+              type="button"
+              onClick={() => setOpen(true)}
+              aria-label="Open menu"
+              className="p-2 text-foreground transition-opacity hover:opacity-70 md:hidden"
+            >
+              <Menu size={24} />
+            </button>
+          </div>
         </div>
       </header>
 
@@ -129,8 +158,9 @@ export function Navbar() {
             </a>
           ))}
         </nav>
-        <div className="pb-10 text-center text-xs text-muted-foreground">
-          zehanxtech@gmail.com
+        <div className="flex flex-col items-center gap-4 pb-10">
+          <SoundToggle />
+          <div className="text-xs text-muted-foreground">zehanxtech@gmail.com</div>
         </div>
       </div>
     </>
