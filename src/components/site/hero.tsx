@@ -1,10 +1,11 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { CAL_URL, HERO_VIDEO_URL } from "@/lib/site";
 import heroPoster from "@/assets/hero-poster.jpg";
 
 export function Hero() {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [videoLoaded, setVideoLoaded] = useState(false);
 
   // Keep the footage playing: some browsers pause muted autoplay videos
   // (power saving, tab focus changes), which leaves only the poster frame.
@@ -96,7 +97,11 @@ export function Hero() {
     };
 
     const onError = () => {
-      if (retried) return;
+      if (retried) {
+        // If retry fails, hide video and show fallback
+        setVideoLoaded(false);
+        return;
+      }
       retried = true;
       video.src = `${baseSrc}${baseSrc.includes("?") ? "&" : "?"}r=${Date.now()}`;
       restart();
@@ -123,6 +128,7 @@ export function Hero() {
     }, 500);
 
     video.addEventListener("error", onError);
+    video.addEventListener("loadeddata", () => setVideoLoaded(true));
     return () => {
       window.clearInterval(interval);
       video.removeEventListener("error", onError);
@@ -134,19 +140,21 @@ export function Hero() {
       id="top"
       className="relative flex min-h-screen w-full flex-col overflow-hidden bg-background text-foreground"
     >
-      <video
-        ref={videoRef}
-        className="absolute inset-0 h-full w-full object-cover will-change-transform"
-        style={{ transform: "scale(1.25)" }}
-        src={HERO_VIDEO_URL}
-        poster={heroPoster}
-        preload="auto"
-        autoPlay
-        muted
-        loop
-        playsInline
-        aria-hidden="true"
-      />
+      {videoLoaded && (
+        <video
+          ref={videoRef}
+          className="absolute inset-0 h-full w-full object-cover will-change-transform"
+          style={{ transform: "scale(1.25)" }}
+          src={HERO_VIDEO_URL}
+          poster={heroPoster}
+          preload="auto"
+          autoPlay
+          muted
+          loop
+          playsInline
+          aria-hidden="true"
+        />
+      )}
       <div
         className="absolute inset-0 bg-gradient-to-t from-background via-background/10 to-background/25"
         aria-hidden="true"

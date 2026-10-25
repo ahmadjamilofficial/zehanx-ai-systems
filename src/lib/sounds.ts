@@ -46,7 +46,9 @@ function ensureCtx(): AudioContext | null {
       .webkitAudioContext;
   if (!AC) return null;
   if (!audioCtx) audioCtx = new AC();
-  if (audioCtx.state === "suspended") void audioCtx.resume();
+  if (audioCtx.state === "suspended") {
+    void audioCtx.resume().catch(() => {});
+  }
   return audioCtx;
 }
 
@@ -132,7 +134,10 @@ export function attachSoundTriggers(): () => void {
   const unlock = () => {
     if (unlocked) return;
     unlocked = true;
-    ensureCtx();
+    const ctx = ensureCtx();
+    if (ctx && ctx.state === "suspended") {
+      void ctx.resume().catch(() => {});
+    }
   };
 
   const onPointerDown = (e: PointerEvent) => {
@@ -144,15 +149,28 @@ export function attachSoundTriggers(): () => void {
     if (e.key === "Tab" || e.key === "Enter" || e.key === " ") unlock();
   };
 
+  // Also unlock on mouse move to reduce delay
+  const onMouseMove = () => {
+    unlock();
+  };
+
+  // Unlock on scroll as well
+  const onScroll = () => {
+    unlock();
+  };
+
   document.addEventListener("mouseover", onMouseOver);
   document.addEventListener("mouseout", onMouseOut);
   document.addEventListener("pointerdown", onPointerDown);
   document.addEventListener("keydown", onKeyDown);
+  document.addEventListener("mousemove", onMouseMove, { once: true });
+  document.addEventListener("scroll", onScroll, { once: true, passive: true });
   return () => {
     document.removeEventListener("mouseover", onMouseOver);
     document.removeEventListener("mouseout", onMouseOut);
     document.removeEventListener("pointerdown", onPointerDown);
     document.removeEventListener("keydown", onKeyDown);
+    // No need to remove mousemove/scroll as they're { once: true }
     lastHover = null;
   };
 }
