@@ -89,9 +89,9 @@ const TONES: Record<SoundKind, Tone[]> = {
 };
 
 function playSound(kind: SoundKind): void {
-  if (!enabled) return;
+  if (!enabled || !unlocked) return; // silent until the first user gesture
   const ctx = ensureCtx();
-  if (!ctx || ctx.state !== "running") return; // no user gesture yet — stay silent
+  if (!ctx || ctx.state !== "running") return;
   for (const tone of TONES[kind]) playTone(ctx, tone);
 }
 
@@ -126,18 +126,32 @@ export function attachSoundTriggers(): () => void {
     }
   };
 
+  // Browsers only allow audio after a real interaction. The context is
+  // created here — never earlier — so nothing warns before this point.
+  const unlock = () => {
+    if (unlocked) return;
+    unlocked = true;
+    ensureCtx();
+  };
+
   const onPointerDown = (e: PointerEvent) => {
-    ensureCtx(); // first gesture unlocks the AudioContext
+    unlock();
     if (closestInteractive(e.target)) playSound("click");
+  };
+
+  const onKeyDown = (e: KeyboardEvent) => {
+    if (e.key === "Tab" || e.key === "Enter" || e.key === " ") unlock();
   };
 
   document.addEventListener("mouseover", onMouseOver);
   document.addEventListener("mouseout", onMouseOut);
   document.addEventListener("pointerdown", onPointerDown);
+  document.addEventListener("keydown", onKeyDown);
   return () => {
     document.removeEventListener("mouseover", onMouseOver);
     document.removeEventListener("mouseout", onMouseOut);
     document.removeEventListener("pointerdown", onPointerDown);
+    document.removeEventListener("keydown", onKeyDown);
     lastHover = null;
   };
 }
