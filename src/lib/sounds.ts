@@ -4,6 +4,7 @@ const STORAGE_KEY = "zehanxtech-sound";
 
 let audioCtx: AudioContext | null = null;
 let enabled = true;
+let unlocked = false; // becomes true on the first user gesture (keydown/pointerdown)
 let lastHover: Element | null = null;
 const listeners = new Set<(enabled: boolean) => void>();
 
