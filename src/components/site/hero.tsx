@@ -65,6 +65,70 @@ export function Hero() {
     };
   }, []);
 
+  // Watchdog: some browsers freeze a muted autoplay video (a cached failed
+  // load, a stalled stream, power saving). If the playhead stops advancing
+  // while the video should be playing, reload the source and resume. The
+  // error path refetches with a cache-busting query so a cached 404 can't
+  // stick.
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const baseSrc = video.src;
+    let retried = false;
+    let lastTime = -1;
+    let stalls = 0;
+
+    const restart = () => {
+      const t = video.currentTime;
+      video.load();
+      const resume = () => {
+        video.removeEventListener("loadeddata", resume);
+        try {
+          if (t > 0 && Number.isFinite(t)) video.currentTime = t % video.duration;
+        } catch {
+          // seeking unavailable yet — starting from 0 is fine
+        }
+        const p = video.play();
+        if (p) p.catch(() => {});
+      };
+      video.addEventListener("loadeddata", resume);
+    };
+
+    const onError = () => {
+      if (retried) return;
+      retried = true;
+      video.src = `${baseSrc}${baseSrc.includes("?") ? "&" : "?"}r=${Date.now()}`;
+      restart();
+    };
+
+    const interval = window.setInterval(() => {
+      if (document.hidden || !video.isConnected) return;
+      if (video.error) {
+        onError();
+        return;
+      }
+      if (video.paused || video.ended || video.readyState < 2) return;
+      const t = video.currentTime;
+      if (Math.abs(t - lastTime) < 0.05) {
+        stalls += 1;
+        if (stalls >= 4) {
+          stalls = 0;
+          restart();
+        }
+      } else {
+        stalls = 0;
+      }
+      lastTime = t;
+    }, 500);
+
+    video.addEventListener("error", onError);
+    return () => {
+      window.clearInterval(interval);
+      video.removeEventListener("error", onError);
+    };
+  }, []);
+
   return (
     <section
       id="top"
