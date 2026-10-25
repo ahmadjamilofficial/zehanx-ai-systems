@@ -91,7 +91,17 @@ const TONES: Record<SoundKind, Tone[]> = {
 function playSound(kind: SoundKind): void {
   if (!enabled || !unlocked) return; // silent until the first user gesture
   const ctx = ensureCtx();
-  if (!ctx || ctx.state !== "running") return;
+  if (!ctx) return;
+  // Try to resume if suspended
+  if (ctx.state === "suspended") {
+    void ctx.resume().then(() => {
+      if (ctx.state === "running") {
+        for (const tone of TONES[kind]) playTone(ctx, tone);
+      }
+    });
+    return;
+  }
+  if (ctx.state !== "running") return;
   for (const tone of TONES[kind]) playTone(ctx, tone);
 }
 
