@@ -5,7 +5,7 @@ import heroPoster from "@/assets/hero-poster.jpg";
 
 export function Hero() {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [videoLoaded, setVideoLoaded] = useState(false);
+  const [videoError, setVideoError] = useState(false);
 
   // Keep the footage playing: some browsers pause muted autoplay videos
   // (power saving, tab focus changes), which leaves only the poster frame.
@@ -99,7 +99,7 @@ export function Hero() {
     const onError = () => {
       if (retried) {
         // If retry fails, hide video and show fallback
-        setVideoLoaded(false);
+        setVideoError(true);
         return;
       }
       retried = true;
@@ -128,7 +128,6 @@ export function Hero() {
     }, 500);
 
     video.addEventListener("error", onError);
-    video.addEventListener("loadeddata", () => setVideoLoaded(true));
     return () => {
       window.clearInterval(interval);
       video.removeEventListener("error", onError);
@@ -140,7 +139,7 @@ export function Hero() {
       id="top"
       className="relative flex min-h-screen w-full flex-col overflow-hidden bg-background text-foreground"
     >
-      {videoLoaded && (
+      {!videoError && (
         <video
           ref={videoRef}
           className="absolute inset-0 h-full w-full object-cover will-change-transform"
@@ -152,6 +151,13 @@ export function Hero() {
           muted
           loop
           playsInline
+          aria-hidden="true"
+        />
+      )}
+      {videoError && (
+        <div
+          className="absolute inset-0 h-full w-full bg-cover bg-center will-change-transform"
+          style={{ transform: "scale(1.25)", backgroundImage: `url(${heroPoster})` }}
           aria-hidden="true"
         />
       )}

@@ -46,9 +46,6 @@ function ensureCtx(): AudioContext | null {
       .webkitAudioContext;
   if (!AC) return null;
   if (!audioCtx) audioCtx = new AC();
-  if (audioCtx.state === "suspended") {
-    void audioCtx.resume().catch(() => {});
-  }
   return audioCtx;
 }
 
@@ -136,7 +133,7 @@ export function attachSoundTriggers(): () => void {
     unlocked = true;
     const ctx = ensureCtx();
     if (ctx && ctx.state === "suspended") {
-      void ctx.resume().catch(() => {});
+      void ctx.resume();
     }
   };
 
