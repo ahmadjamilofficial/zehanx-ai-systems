@@ -5,7 +5,5 @@ export const EMAIL = "zehanxtech@gmail.com";
 export const WHATSAPP_URL = "https://wa.me/923338188722";
 export const WHATSAPP_DISPLAY = "+92 333 8188722";
 export const X_URL = "https://x.com/ZehanxTech";
-
 export const CONTACT_LINKS = [EMAIL, WHATSAPP_URL, X_URL, CAL_URL];
-export const WHATSAPP_DISPLAY = "0333 8188722";
 export const HERO_VIDEO_URL = heroVideo.url;
