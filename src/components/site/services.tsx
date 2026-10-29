@@ -3,33 +3,23 @@ import { Reveal } from "./reveal";
 const SERVICES = [
   {
     num: "01",
-    title: "AI SYSTEMS",
-    desc: "Custom machine learning systems designed, trained and shipped end to end — forecasting, detection, recommendation, optimization.",
+    title: "ML DATA SOLUTIONS",
+    desc: "Dataset engineering, data cleaning, annotation, synthetic data generation, and training-data pipelines that turn raw data into model-ready assets.",
   },
   {
     num: "02",
-    title: "AGENTIC AI SOFTWARE",
-    desc: "Autonomous and semi-autonomous agents that plan, use tools and execute multi-step workflows across your stack.",
+    title: "MODEL DEVELOPMENT & EVALUATION",
+    desc: "Classical ML, deep learning, computer vision, NLP, model fine-tuning, benchmarking, and performance optimization — building models that meet production standards.",
   },
   {
     num: "03",
-    title: "ENTERPRISE SOFTWARE",
-    desc: "Internal platforms, dashboards and integrations built around your operations — not a generic SaaS you bend your business around.",
+    title: "APPLIED AI SYSTEMS",
+    desc: "Build, integrate, deploy, and maintain production AI systems that solve specific operational problems inside your existing infrastructure.",
   },
   {
     num: "04",
-    title: "LLM TRAINING & FINE-TUNING",
-    desc: "Large language models trained on your data and your domain, deployable privately on your own infrastructure.",
-  },
-  {
-    num: "05",
-    title: "DATA ENGINEERING",
-    desc: "Pipelines, warehouses and quality controls that turn scattered operational data into a foundation models can trust.",
-  },
-  {
-    num: "06",
-    title: "MLOPS & DEPLOYMENT",
-    desc: "Serving, monitoring, evaluation and scaling — keeping models accurate and available long after launch.",
+    title: "ZEHANX ML PLATFORM",
+    desc: "Our visual environment for data ingestion, model selection, experiment tracking, training, evaluation, and deployment — the platform that powers our delivery.",
   },
 ];
 
@@ -38,18 +28,17 @@ export function Services() {
     <section
       id="services"
       className="scroll-mt-20 px-5 py-24 sm:px-6 md:px-10 md:py-32 lg:px-14"
+      aria-labelledby="services-heading"
     >
       <Reveal>
         <p className="font-pixel text-sm uppercase tracking-widest text-muted-foreground">
           02 / Services
         </p>
-        <h2 className="mt-6 text-3xl font-medium uppercase tracking-wide md:text-5xl">
-          WHAT WE <span className="font-pixel text-[1.15em]">BUILD</span>
+        <h2 id="services-heading" className="mt-6 text-3xl font-medium uppercase tracking-wide md:text-5xl">
+          OUR <span className="font-pixel text-[1.15em]">PILLARS</span>
         </h2>
         <p className="mt-5 max-w-xl text-sm leading-relaxed text-muted-foreground md:text-base">
-          Six capabilities, one delivery model — we take AI from the first data
-          pull to a system your teams run on, designed, trained, deployed and
-          maintained by the same people.
+          Four integrated capabilities — data infrastructure, model development, applied AI systems, and our internal ML platform — working together to deliver measurable business outcomes.
         </p>
       </Reveal>
       <div className="mt-12">
@@ -102,12 +91,13 @@ export function Process() {
     <section
       id="process"
       className="scroll-mt-20 border-t border-line px-5 py-24 sm:px-6 md:px-10 md:py-32 lg:px-14"
+      aria-labelledby="process-heading"
     >
       <Reveal>
         <p className="font-pixel text-sm uppercase tracking-widest text-muted-foreground">
           03 / Process
         </p>
-        <h2 className="mt-6 text-3xl font-medium uppercase tracking-wide md:text-5xl">
+        <h2 id="process-heading" className="mt-6 text-3xl font-medium uppercase tracking-wide md:text-5xl">
           HOW IT <span className="font-pixel text-[1.15em]">SHIPS</span>
         </h2>
         <p className="mt-5 max-w-xl text-sm leading-relaxed text-muted-foreground md:text-base">

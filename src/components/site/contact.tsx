@@ -1,37 +1,37 @@
 import { ArrowUpRight } from "lucide-react";
 import { Reveal } from "./reveal";
 import { Logo } from "./navbar";
-import { CAL_URL, EMAIL, WHATSAPP_DISPLAY, WHATSAPP_URL } from "@/lib/site";
+import { CAL_URL, EMAIL, WHATSAPP_DISPLAY, WHATSAPP_URL, X_URL } from "@/lib/site";
 
 export function Contact() {
   return (
     <section
       id="contact"
       className="scroll-mt-20 border-t border-line px-5 py-24 sm:px-6 md:px-10 md:py-32 lg:px-14"
+      aria-labelledby="contact-heading"
     >
       <Reveal>
         <p className="font-pixel text-sm uppercase tracking-widest text-muted-foreground">
           06 / Talk
         </p>
         <h2
+          id="contact-heading"
           className="mt-6 text-4xl font-medium uppercase tracking-wide md:text-6xl xl:text-7xl"
           style={{ lineHeight: 0.95 }}
         >
-          LET&apos;S BUILD{" "}
-          <span className="font-pixel text-[1.1em] font-normal">INTELLIGENCE</span>{" "}
-          FOR YOUR BUSINESS
+          TURN YOUR DATA{" "}
+          <span className="font-pixel text-[1.1em] font-normal">INTO</span>{" "}
+          PRODUCTION INTELLIGENCE
         </h2>
       </Reveal>
       <Reveal delay={100}>
         <p className="mt-6 max-w-xl text-sm leading-relaxed text-muted-foreground md:text-base">
           No forms, no funnels. Reach us directly or book a slot on the calendar
-          — we reply fast. Tell us what you are trying to automate, predict or
-          understand, and we will tell you honestly whether AI is the right
-          tool for it.
+          — we reply fast. Tell us what business outcome you're trying to achieve, and we'll tell you honestly whether ML is the right path.
         </p>
       </Reveal>
 
-      <div className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-3">
+      <div className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Reveal delay={80}>
           <a
             href={`mailto:${EMAIL}`}
@@ -63,6 +63,24 @@ export function Contact() {
             </span>
             <span className="mt-auto pt-6 text-xs text-muted-foreground transition-colors group-hover:text-foreground">
               Message us, no calls
+            </span>
+          </a>
+        </Reveal>
+        <Reveal delay={160}>
+          <a
+            href={X_URL}
+            target="_blank"
+            rel="noreferrer"
+            className="group flex h-full flex-col border border-line p-6 transition-colors hover:border-foreground/30 md:p-8"
+          >
+            <p className="font-pixel text-xs uppercase tracking-widest text-muted-foreground">
+              X (Twitter)
+            </p>
+            <span className="mt-6 text-lg font-medium md:text-xl">
+              @ZehanxTech
+            </span>
+            <span className="mt-auto pt-6 text-xs text-muted-foreground transition-colors group-hover:text-foreground">
+              Follow for updates
             </span>
           </a>
         </Reveal>

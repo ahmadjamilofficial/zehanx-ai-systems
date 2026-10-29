@@ -2,14 +2,14 @@ import { Reveal } from "./reveal";
 import coreImg from "@/assets/about-core.jpg";
 
 const MARQUEE_ITEMS = [
-  "MACHINE LEARNING",
-  "AGENTIC AI",
-  "DATA ENGINEERING",
-  "LLM TRAINING",
-  "ENTERPRISE SOFTWARE",
-  "AI SYSTEMS",
-  "MLOPS",
+  "DATA INFRASTRUCTURE",
+  "MODEL DEVELOPMENT",
+  "MODEL EVALUATION",
+  "APPLIED AI SYSTEMS",
+  "DATASET ENGINEERING",
   "COMPUTER VISION",
+  "NLP",
+  "PRODUCTION ML",
 ];
 
 export function Marquee() {
@@ -31,9 +31,9 @@ export function Marquee() {
 }
 
 const PROOF_POINTS = [
-  "End-to-end delivery",
-  "Private & on-prem option",
-  "Domain-tuned models",
+  "Production-deployed systems",
+  "Measurable business outcomes",
+  "End-to-end ML expertise",
 ];
 
 export function About() {
@@ -41,6 +41,7 @@ export function About() {
     <section
       id="about"
       className="scroll-mt-20 px-5 py-24 sm:px-6 md:px-10 md:py-32 lg:px-14"
+      aria-labelledby="about-heading"
     >
       <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
         <div>
@@ -49,31 +50,24 @@ export function About() {
               01 / What we do
             </p>
             <h2
+              id="about-heading"
               className="mt-6 text-3xl font-medium uppercase tracking-wide md:text-5xl"
               style={{ lineHeight: 1.02 }}
             >
-              AN ML &amp; DATA COMPANY FOR BUSINESSES THAT CAN&apos;T AFFORD TO
-              GUESS
+              A FULL-STACK ML SOLUTIONS PROVIDER FOR ENTERPRISES THAT NEED
+              INTELLIGENCE IN PRODUCTION
             </h2>
           </Reveal>
           <Reveal delay={120}>
             <div className="mt-8 max-w-xl space-y-4 text-sm leading-relaxed text-muted-foreground md:text-base">
               <p>
-                ZehanX Tech builds the intelligence behind modern enterprises —
-                AI systems, agentic software, enterprise platforms and the data
-                infrastructure that powers them, from first pipeline to
-                production.
+                ZehanX Tech helps enterprises turn complex data into production-ready machine learning systems — from dataset engineering and model development to evaluation and deployment.
               </p>
               <p>
-                We train and fine-tune large language models on your domain, so
-                the intelligence speaks your industry&apos;s language — not a
-                generic one. Your data stays yours: private deployments,
-                governed pipelines, models that never leak.
+                We don't just build prototypes. We deliver measurable business outcomes: reduced costs, better decisions, less manual work, and competitive advantages through AI that actually works in your existing systems.
               </p>
               <p>
-                From autonomous agents that run workflows to enterprise platforms
-                your staff live in daily, everything we ship is built to operate:
-                reliably, privately, at scale.
+                Our approach combines deep ML expertise with practical engineering — data infrastructure you can trust, models that meet production standards, and systems that integrate seamlessly with your operations.
               </p>
             </div>
           </Reveal>
@@ -93,7 +87,7 @@ export function About() {
         <Reveal delay={150}>
           <img
             src={coreImg}
-            alt="Abstract visualization of a ZehanX Tech AI core system"
+            alt="Abstract visualization of ZehanX Tech's ML data infrastructure and model development platform"
             loading="lazy"
             width={1200}
             height={1504}

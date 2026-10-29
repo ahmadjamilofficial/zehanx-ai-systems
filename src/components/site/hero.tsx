@@ -138,6 +138,7 @@ export function Hero() {
     <section
       id="top"
       className="relative flex min-h-screen w-full flex-col overflow-hidden bg-background text-foreground"
+      aria-labelledby="hero-heading"
     >
       {!videoError && (
         <video
@@ -151,14 +152,15 @@ export function Hero() {
           muted
           loop
           playsInline
-          aria-hidden="true"
+          aria-label="Hero video showing abstract data visualization representing machine learning and data infrastructure"
         />
       )}
       {videoError && (
         <div
           className="absolute inset-0 h-full w-full bg-cover bg-center will-change-transform"
           style={{ transform: "scale(1.25)", backgroundImage: `url(${heroPoster})` }}
-          aria-hidden="true"
+          role="img"
+          aria-label="Hero image showing abstract data visualization representing machine learning and data infrastructure"
         />
       )}
       <div
@@ -176,9 +178,9 @@ export function Hero() {
             </h2>
             <p className="mt-3 font-pixel text-[10px] text-muted-foreground">*</p>
             <p className="mt-1 font-pixel text-xs leading-relaxed text-muted-foreground">
-              machine intelligence,
+              from complex data to
               <br />
-              built for business
+              production-ready intelligence
             </p>
           </div>
           <div className="text-left">
@@ -193,21 +195,18 @@ export function Hero() {
               What we do
             </p>
             <p className="max-w-[240px] text-sm leading-relaxed text-foreground/90">
-              We build AI systems, agentic and enterprise software, and train
-              LLMs for businesses and industries
+              We engineer machine-learning systems that help organizations turn data into measurable business outcomes
             </p>
           </div>
           <div>
             <p className="mb-3 font-pixel text-base uppercase tracking-widest text-muted-foreground">
-              Capabilities
+              Core Services
             </p>
             <ul className="space-y-0.5 text-sm leading-relaxed text-foreground/90">
-              <li>AI Systems</li>
-              <li>Agentic AI Software</li>
-              <li>Enterprise Software</li>
-              <li>LLM Training &amp; Fine-Tuning</li>
               <li>Data Engineering</li>
-              <li>MLOps &amp; Deployment</li>
+              <li>ML Development</li>
+              <li>Model Evaluation</li>
+              <li>Deployment</li>
             </ul>
           </div>
         </div>
@@ -217,19 +216,20 @@ export function Hero() {
         <div className="pb-4">
           <div className="grid grid-cols-1 items-end gap-4 sm:gap-6 lg:grid-cols-2">
             <h1
+              id="hero-heading"
               className="text-3xl uppercase tracking-wide sm:text-4xl md:text-5xl lg:text-[3.75rem] xl:text-[4.25rem]"
               style={{ lineHeight: 0.88 }}
             >
-              WE BUILD THE
+              FROM COMPLEX
+              <br />
+              <span className="inline-block font-pixel text-[1.25em] font-normal leading-none">
+                DATA
+              </span>
+              <br />
+              TO PRODUCTION-READY
               <br />
               <span className="inline-block font-pixel text-[1.25em] font-normal leading-none">
                 INTELLIGENCE
-              </span>
-              <br />
-              BEHIND MODERN
-              <br />
-              <span className="inline-block font-pixel text-[1.25em] font-normal leading-none">
-                ENTERPRISES
               </span>
             </h1>
 
@@ -246,16 +246,16 @@ export function Hero() {
               <div className="flex flex-wrap items-stretch gap-2 text-sm text-foreground/80 sm:gap-3">
                 <span className="flex items-center bg-card px-3 py-2 sm:px-4">
                   <span className="font-pixel text-xs tracking-tight sm:text-sm">
-                    AGENTIC SYSTEMS
+                    DATA INFRASTRUCTURE
                   </span>
                 </span>
                 <span className="flex items-center gap-2 bg-card px-3 py-2 sm:px-4">
-                  <span className="text-base font-bold sm:text-lg">LLM</span>
-                  <span className="text-xs text-muted-foreground">TRAINING</span>
+                  <span className="text-base font-bold sm:text-lg">ML</span>
+                  <span className="text-xs text-muted-foreground">DEVELOPMENT</span>
                 </span>
                 <span className="flex items-center bg-card px-3 py-2 sm:px-4">
                   <span className="text-[10px] font-bold tracking-tight sm:text-xs">
-                    ENTERPRISE SOFTWARE
+                    APPLIED AI SYSTEMS
                   </span>
                 </span>
               </div>

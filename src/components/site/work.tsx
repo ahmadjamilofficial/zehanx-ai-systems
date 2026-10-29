@@ -5,25 +5,25 @@ import workEnterprise from "@/assets/work-enterprise.jpg";
 
 const PROJECTS = [
   {
-    img: workAgents,
-    alt: "Abstract network of connected agent nodes",
-    tag: "AGENTIC AI",
-    title: "AXON — Multi-Agent Orchestration Layer",
-    desc: "A supervised agent fabric where planner, tool-use and memory agents decompose objectives, invoke enterprise APIs and execute long-horizon workflows — with human-in-the-loop checkpoints gating every critical action.",
+    img: workEnterprise,
+    alt: "DATAFORGE dataset engineering platform visualization showing data pipelines, annotation workflows, and quality control systems for ML data infrastructure",
+    tag: "ML DATA SOLUTIONS",
+    title: "DATAFORGE — Dataset Engineering Platform",
+    desc: "Automated data cleaning, annotation pipelines, and synthetic data generation that transform raw operational data into training-ready datasets — with quality controls and versioning built in.",
   },
   {
     img: workLlm,
-    alt: "Abstract streams of glowing token particles",
-    tag: "LLM TRAINING",
-    title: "CORTEX-D — Private Domain LLM",
-    desc: "A foundation model adapted with SFT and LoRA on proprietary industry corpora, preference-aligned and served through an on-prem inference endpoint — so sensitive data never leaves your infrastructure.",
+    alt: "CORTEX-D production model pipeline visualization showing model development, benchmarking, performance optimization, and evaluation workflows",
+    tag: "MODEL DEVELOPMENT",
+    title: "CORTEX-D — Production Model Pipeline",
+    desc: "End-to-end model development from classical ML to deep learning — featuring automated benchmarking, performance optimization, and evaluation against production standards before deployment.",
   },
   {
-    img: workEnterprise,
-    alt: "Layered dark data infrastructure with red conduits",
-    tag: "DATA PLATFORM",
-    title: "DATAFORGE — Feature & Vector Platform",
-    desc: "Streaming ingestion, a governed feature store and a low-latency vector index powering retrieval-augmented generation — one real-time substrate every model, agent and dashboard reads from.",
+    img: workAgents,
+    alt: "AXON enterprise AI integration visualization showing production AI systems, document processing, decision support, and predictive analytics in enterprise infrastructure",
+    tag: "APPLIED AI SYSTEMS",
+    title: "AXON — Enterprise AI Integration",
+    desc: "Production AI systems integrated into existing enterprise infrastructure — from document processing and decision support to predictive analytics, deployed with monitoring and continuous improvement.",
   },
 ];
 
@@ -32,12 +32,13 @@ export function Work() {
     <section
       id="work"
       className="scroll-mt-20 px-5 py-24 sm:px-6 md:px-10 md:py-32 lg:px-14"
+      aria-labelledby="work-heading"
     >
       <Reveal>
         <p className="font-pixel text-sm uppercase tracking-widest text-muted-foreground">
           04 / Work
         </p>
-        <h2 className="mt-6 text-3xl font-medium uppercase tracking-wide md:text-5xl">
+        <h2 id="work-heading" className="mt-6 text-3xl font-medium uppercase tracking-wide md:text-5xl">
           SELECTED <span className="font-pixel text-[1.15em]">BUILDS</span>
         </h2>
       </Reveal>
@@ -75,14 +76,14 @@ export function Work() {
 }
 
 const INDUSTRIES = [
-  { name: "FINANCE & BANKING", note: "Risk, fraud and forecasting" },
-  { name: "HEALTHCARE", note: "Clinical data and documentation" },
-  { name: "RETAIL & E-COMMERCE", note: "Demand, pricing and personalization" },
-  { name: "MANUFACTURING", note: "Quality, maintenance and yield" },
-  { name: "LOGISTICS & SUPPLY CHAIN", note: "Routing and prediction" },
-  { name: "TELECOM", note: "Network and customer operations" },
-  { name: "ENERGY & UTILITIES", note: "Load forecasting and optimization" },
-  { name: "EDUCATION", note: "Adaptive learning and assessment" },
+  { name: "FINANCE & BANKING", note: "Risk scoring, fraud detection, demand forecasting" },
+  { name: "HEALTHCARE", note: "Clinical NLP, document automation, diagnostic support" },
+  { name: "RETAIL & E-COMMERCE", note: "Recommendation engines, demand prediction, pricing optimization" },
+  { name: "MANUFACTURING", note: "Quality prediction, maintenance scheduling, yield optimization" },
+  { name: "LOGISTICS & SUPPLY CHAIN", note: "Route optimization, demand forecasting, anomaly detection" },
+  { name: "TELECOM", note: "Network operations, customer analytics, churn prediction" },
+  { name: "ENERGY & UTILITIES", note: "Load forecasting, predictive maintenance, grid optimization" },
+  { name: "EDUCATION", note: "Adaptive learning, assessment automation, content generation" },
 ];
 
 export function Industries() {
@@ -90,12 +91,13 @@ export function Industries() {
     <section
       id="industries"
       className="scroll-mt-20 border-t border-line px-5 py-24 sm:px-6 md:px-10 md:py-32 lg:px-14"
+      aria-labelledby="industries-heading"
     >
       <Reveal>
         <p className="font-pixel text-sm uppercase tracking-widest text-muted-foreground">
           05 / Industries
         </p>
-        <h2 className="mt-6 text-3xl font-medium uppercase tracking-wide md:text-5xl">
+        <h2 id="industries-heading" className="mt-6 text-3xl font-medium uppercase tracking-wide md:text-5xl">
           WHERE IT <span className="font-pixel text-[1.15em]">WORKS</span>
         </h2>
       </Reveal>
