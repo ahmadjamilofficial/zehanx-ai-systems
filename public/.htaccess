@@ -33,9 +33,3 @@
   RewriteCond %{HTTPS} off
   RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 </IfModule>
-
-# Canonical URL handling
-<IfModule mod_rewrite.c>
-  RewriteCond %{HTTP_HOST} ^www\.zehanxtech\.com [NC]
-  RewriteRule ^(.*)$ https://zehanxtech.com/$1 [L,R=301]
-</IfModule>

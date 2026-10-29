@@ -22,7 +22,7 @@
 - Twitter Card tags with image and site handle
 
 ### Page-Specific Meta Tags (src/routes/index.tsx)
-- Canonical URL: https://zehanxtech.com
+- Canonical URL: https://zehanxtech.vercel.app
 - Enhanced structured data (Organization, BreadcrumbList, FAQPage)
 - Service catalog in schema.org format
 
@@ -30,6 +30,7 @@
 
 ### Organization Schema
 - Name: ZehanX Tech (alternate: ZehanX Technologies)
+- URL: https://zehanxtech.vercel.app
 - Legal name and contact information
 - Geographic service area (Karachi, Pakistan with 1000km radius)
 - Service catalog with detailed descriptions
@@ -47,10 +48,11 @@
 - Allows all user-agents
 - Disallows API, admin, and internal routes
 - Includes crawl-delay for rate limiting
-- References sitemap.xml
+- References sitemap.xml at https://zehanxtech.vercel.app/sitemap.xml
 
 ### sitemap.xml (public/sitemap.xml)
-- Homepage entry with priority 1.0
+- Homepage entry: https://zehanxtech.vercel.app
+- Priority 1.0 for homepage
 - Weekly changefreq for regular updates
 - Lastmod date for freshness
 
@@ -58,8 +60,8 @@
 - Gzip compression for text-based assets
 - Long cache headers for static assets (1 year)
 - Security headers (X-Content-Type-Options, X-Frame-Options, etc.)
-- HTTPS enforcement
-- Canonical URL handling (www to non-www)
+- HTTPS enforcement (for custom domain configuration)
+- Note: Vercel handles HTTPS automatically, this is for custom domain setup
 
 ## Performance Optimizations
 
@@ -106,7 +108,7 @@
 
 ### Open Graph
 - Site name, title, description
-- Image URL (1200x630) with alt text
+- Image URL: https://zehanxtech.vercel.app/og-image.jpg (1200x630) with alt text
 - Website type
 - Locale: en_US
 
@@ -117,14 +119,15 @@
 
 ## Next Steps for SEO
 
-1. **Create og-image.jpg** (1200x630px) for social sharing
-2. **Set up Google Search Console** with sitemap submission
+1. **Create og-image.jpg** (1200x630px) for social sharing and upload to public/
+2. **Set up Google Search Console** with sitemap at https://zehanxtech.vercel.app/sitemap.xml
 3. **Verify domain ownership** for structured data testing
 4. **Monitor Core Web Vitals** for performance
 5. **Add Schema markup validation** in Google Rich Results Test
 6. **Set up analytics** (Google Analytics 4 or alternative)
-7. **Claim social media handles** (@zehanxtech)
+7. **Social media handles**: X (@ZehanxTech) - add more as needed
 8. **Submit to relevant directories** (Clutch, GoodFirms, etc.)
 9. **Build backlinks** through technical content and case studies
 10. **Monitor rankings** for target keywords
+11. **Configure custom domain** (e.g., zehanxtech.com) when ready and update all URLs
 

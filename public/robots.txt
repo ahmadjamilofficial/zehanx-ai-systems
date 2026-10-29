@@ -7,4 +7,4 @@ Disallow: /assets/
 
 Crawl-delay: 1
 
-Sitemap: https://zehanxtech.com/sitemap.xml
+Sitemap: https://zehanxtech.vercel.app/sitemap.xml
