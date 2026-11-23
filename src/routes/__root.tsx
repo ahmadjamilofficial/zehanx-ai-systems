@@ -84,7 +84,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "theme-color", content: "#000000" },
       { name: "robots", content: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" },
       { name: "googlebot", content: "index, follow" },
-      { name: "google-site-verification", content: "" },
       { name: "msapplication-TileColor", content: "#000000" },
       { name: "format-detection", content: "telephone=no" },
       { property: "og:site_name", content: "ZehanX Tech" },
