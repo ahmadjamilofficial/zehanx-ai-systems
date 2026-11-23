@@ -19,14 +19,14 @@ export function Contact() {
           className="mt-6 text-4xl font-medium uppercase tracking-wide md:text-6xl xl:text-7xl"
           style={{ lineHeight: 0.95 }}
         >
-          TURN YOUR DATA{" "}
+          LET’S BUILD{" "}
           <span className="font-pixel text-[1.1em] font-normal">INTO</span>{" "}
-          PRODUCTION INTELLIGENCE
+          YOUR NEXT SYSTEM
         </h2>
       </Reveal>
       <Reveal delay={100}>
         <p className="mt-6 max-w-xl text-sm leading-relaxed text-muted-foreground md:text-base">
-          No forms, no funnels. Reach us directly or book a slot on the calendar
+          Tell us what you want to build. We scope the work, agree on milestones and provide a clear fixed-price proposal before development begins.
           — we reply fast. Tell us what business outcome you're trying to achieve, and we'll tell you honestly whether ML is the right path.
         </p>
       </Reveal>
