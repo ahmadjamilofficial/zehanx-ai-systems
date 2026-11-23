@@ -76,14 +76,14 @@ export function Work() {
 }
 
 const INDUSTRIES = [
-  { name: "FINANCE & BANKING", note: "Risk scoring, fraud detection, demand forecasting" },
-  { name: "HEALTHCARE", note: "Clinical NLP, document automation, diagnostic support" },
-  { name: "RETAIL & E-COMMERCE", note: "Recommendation engines, demand prediction, pricing optimization" },
-  { name: "MANUFACTURING", note: "Quality prediction, maintenance scheduling, yield optimization" },
-  { name: "LOGISTICS & SUPPLY CHAIN", note: "Route optimization, demand forecasting, anomaly detection" },
-  { name: "TELECOM", note: "Network operations, customer analytics, churn prediction" },
-  { name: "ENERGY & UTILITIES", note: "Load forecasting, predictive maintenance, grid optimization" },
-  { name: "EDUCATION", note: "Adaptive learning, assessment automation, content generation" },
+  { name: "FINANCE & BANKING", note: "Operational portals, reconciliation workflows, reporting and risk analytics" },
+  { name: "HEALTHCARE", note: "Patient-facing websites, secure workflow tools and document automation" },
+  { name: "RETAIL & E-COMMERCE", note: "E-commerce websites, inventory systems, recommendations and pricing workflows" },
+  { name: "MANUFACTURING", note: "Operations dashboards, production workflows and predictive maintenance" },
+  { name: "LOGISTICS & SUPPLY CHAIN", note: "Dispatch systems, fleet dashboards, integrations and demand forecasting" },
+  { name: "TELECOM", note: "Customer portals, provisioning workflows, analytics and churn prediction" },
+  { name: "ENERGY & UTILITIES", note: "Asset monitoring, field-service systems and predictive maintenance" },
+  { name: "EDUCATION", note: "Learning platforms, assessment workflows and content tools" },
 ];
 
 export function Industries() {

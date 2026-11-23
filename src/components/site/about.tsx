@@ -2,14 +2,18 @@ import { Reveal } from "./reveal";
 import coreImg from "@/assets/about-core.jpg";
 
 const MARQUEE_ITEMS = [
-  "DATA INFRASTRUCTURE",
+  "CUSTOM SOFTWARE",
+  "BUSINESS SYSTEMS",
+  "WEBSITES & E-COMMERCE",
   "MODEL DEVELOPMENT",
+  "WORKFLOW AUTOMATION",
   "MODEL EVALUATION",
   "APPLIED AI SYSTEMS",
   "DATASET ENGINEERING",
   "COMPUTER VISION",
   "NLP",
   "PRODUCTION ML",
+  "DATA ENGINEERING",
 ];
 
 export function Marquee() {
@@ -30,10 +34,10 @@ export function Marquee() {
   );
 }
 
-const PROOF_POINTS = [
-  "Production-deployed systems",
-  "Measurable business outcomes",
-  "End-to-end ML expertise",
+const CAPABILITIES = [
+  "Software built around your workflows",
+  "From idea to production",
+  "AI as an engineering advantage",
 ];
 
 export function About() {
@@ -54,26 +58,26 @@ export function About() {
               className="mt-6 text-3xl font-medium uppercase tracking-wide md:text-5xl"
               style={{ lineHeight: 1.02 }}
             >
-              A FULL-STACK ML SOLUTIONS PROVIDER FOR ENTERPRISES THAT NEED
-              INTELLIGENCE IN PRODUCTION
+              SOFTWARE, SYSTEMS AND WEBSITES BUILT AROUND
+              THE WAY YOUR BUSINESS WORKS
             </h2>
           </Reveal>
           <Reveal delay={120}>
             <div className="mt-8 max-w-xl space-y-4 text-sm leading-relaxed text-muted-foreground md:text-base">
               <p>
-                ZehanX Tech helps enterprises turn complex data into production-ready machine learning systems — from dataset engineering and model development to evaluation and deployment.
+                ZehanX Tech designs and builds the digital products businesses depend on: custom software, websites, operational systems and automation.
               </p>
               <p>
-                We don't just build prototypes. We deliver measurable business outcomes: reduced costs, better decisions, less manual work, and competitive advantages through AI that actually works in your existing systems.
+                From discovery to deployment, we align the product with your users, workflows, integrations and operating constraints.
               </p>
               <p>
-                Our approach combines deep ML expertise with practical engineering — data infrastructure you can trust, models that meet production standards, and systems that integrate seamlessly with your operations.
+                AI and machine learning strengthen the work where they add value; they are part of our toolkit, not the only thing we build.
               </p>
             </div>
           </Reveal>
           <Reveal delay={200}>
             <div className="mt-10 flex flex-wrap gap-3">
-              {PROOF_POINTS.map((point) => (
+              {CAPABILITIES.map((point) => (
                 <span
                   key={point}
                   className="border border-line px-4 py-3 font-pixel text-xs text-foreground/80"

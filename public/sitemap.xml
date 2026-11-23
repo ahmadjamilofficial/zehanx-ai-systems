@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://zehanxtech.vercel.app</loc>
-    <lastmod>2026-10-29</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
+  <url><loc>https://zehanxtech.vercel.app/</loc></url>
+  <url><loc>https://zehanxtech.vercel.app/pricing</loc></url>
+  <url><loc>https://zehanxtech.vercel.app/insights</loc></url>
+  <url><loc>https://zehanxtech.vercel.app/privacy</loc></url>
+  <url><loc>https://zehanxtech.vercel.app/terms</loc></url>
+  <url><loc>https://zehanxtech.vercel.app/security</loc></url>
+  <url><loc>https://zehanxtech.vercel.app/services/custom-software</loc></url>
+  <url><loc>https://zehanxtech.vercel.app/services/business-systems</loc></url>
+  <url><loc>https://zehanxtech.vercel.app/services/websites</loc></url>
+  <url><loc>https://zehanxtech.vercel.app/services/ai-ml</loc></url>
+  <url><loc>https://zehanxtech.vercel.app/services/data-engineering</loc></url>
+  <url><loc>https://zehanxtech.vercel.app/insights/business-ready-for-ai</loc></url>
+  <url><loc>https://zehanxtech.vercel.app/insights/whatsapp-automation-cost</loc></url>
+  <url><loc>https://zehanxtech.vercel.app/insights/website-vs-custom-software</loc></url>
 </urlset>

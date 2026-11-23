@@ -1,26 +1,12 @@
 import { Reveal } from "./reveal";
 
 const SERVICES = [
-  {
-    num: "01",
-    title: "ML DATA SOLUTIONS",
-    desc: "Dataset engineering, data cleaning, annotation, synthetic data generation, and training-data pipelines that turn raw data into model-ready assets.",
-  },
-  {
-    num: "02",
-    title: "MODEL DEVELOPMENT & EVALUATION",
-    desc: "Classical ML, deep learning, computer vision, NLP, model fine-tuning, benchmarking, and performance optimization — building models that meet production standards.",
-  },
-  {
-    num: "03",
-    title: "APPLIED AI SYSTEMS",
-    desc: "Build, integrate, deploy, and maintain production AI systems that solve specific operational problems inside your existing infrastructure.",
-  },
-  {
-    num: "04",
-    title: "ZEHANX ML PLATFORM",
-    desc: "Our visual environment for data ingestion, model selection, experiment tracking, training, evaluation, and deployment — the platform that powers our delivery.",
-  },
+  { num: "01", slug: "custom-software", title: "CUSTOM SOFTWARE & WEB APPS", desc: "Purpose-built applications and platforms designed around your workflows and users.", bullets: ["Web apps, portals and customer platforms", "Frontend, backend and API integrations", "Testing, deployment and handover"] },
+  { num: "02", slug: "business-systems", title: "BUSINESS SYSTEMS & AUTOMATION", desc: "Connected operations tools that reduce repetitive work and improve visibility.", bullets: ["ERP/CRM integrations and dashboards", "Internal tools and approval workflows", "WhatsApp and process automation"] },
+  { num: "03", slug: "websites", title: "WEBSITES & E-COMMERCE", desc: "Responsive digital experiences built for clarity, speed and conversion.", bullets: ["Business websites and landing pages", "Online stores and payment integrations", "CMS, analytics and technical SEO"] },
+  { num: "04", slug: "ai-ml", title: "AI & ML SYSTEMS", desc: "Production-focused AI capabilities integrated into real products and workflows.", bullets: ["LLM applications and intelligent agents", "Machine learning and model evaluation", "Deployment, monitoring and integration"] },
+  { num: "05", slug: "data-engineering", title: "DATA ENGINEERING & DATASETS", desc: "Reliable data foundations for analytics, applications and machine learning.", bullets: ["Data pipelines and transformations", "Cleaning, annotation and quality controls", "Training-ready datasets and documentation"] },
+  { num: "06", slug: "zehanx-ml-platform", title: "THE ZEHANX ML PLATFORM", desc: "A platform direction for managing model and data workflows.", bullets: ["Data ingestion and model workflows", "Experiment tracking and evaluation", "Deployment workflow foundations"] },
 ];
 
 export function Services() {
@@ -35,10 +21,10 @@ export function Services() {
           02 / Services
         </p>
         <h2 id="services-heading" className="mt-6 text-3xl font-medium uppercase tracking-wide md:text-5xl">
-          OUR <span className="font-pixel text-[1.15em]">PILLARS</span>
+          WHAT WE <span className="font-pixel text-[1.15em]">BUILD</span>
         </h2>
         <p className="mt-5 max-w-xl text-sm leading-relaxed text-muted-foreground md:text-base">
-          Four integrated capabilities — data infrastructure, model development, applied AI systems, and our internal ML platform — working together to deliver measurable business outcomes.
+          From complete software products and websites to business automation and production AI, we take projects from discovery through deployment.
         </p>
       </Reveal>
       <div className="mt-12">
@@ -48,12 +34,13 @@ export function Services() {
               <span className="font-pixel text-sm text-muted-foreground transition-colors group-hover:text-accent">
                 {service.num}
               </span>
-              <h3 className="text-xl font-semibold tracking-wide md:text-2xl">
-                {service.title}
-              </h3>
-              <p className="text-sm leading-relaxed text-muted-foreground">
-                {service.desc}
-              </p>
+              <h3 className="text-xl font-semibold tracking-wide md:text-2xl"><a href={`/services/${service.slug}`} className="transition-colors hover:text-accent">{service.title}</a></h3>
+              <div>
+                <p className="text-sm leading-relaxed text-muted-foreground">{service.desc}</p>
+                <ul className="mt-3 space-y-1 text-xs leading-relaxed text-muted-foreground">
+                  {service.bullets.map((item) => <li key={item}>— {item}</li>)}
+                </ul>
+              </div>
             </div>
           </Reveal>
         ))}
@@ -67,22 +54,22 @@ const STEPS = [
   {
     num: "01",
     title: "DISCOVER",
-    desc: "We map your operations, data and constraints, and define what intelligence would actually change.",
+    desc: "We map your goals, users, current process, data and constraints before proposing a solution.",
   },
   {
     num: "02",
     title: "ARCHITECT",
-    desc: "We design the system: data flow, model approach, agent topology, integration points and deployment path.",
+    desc: "We design the product architecture, user experience, integrations, milestones and deployment path.",
   },
   {
     num: "03",
     title: "BUILD & TRAIN",
-    desc: "We build the software, train and fine-tune the models on your data, and iterate against real metrics.",
+    desc: "We build in agreed milestones, with one accountable lead and async recorded progress updates.",
   },
   {
     num: "04",
     title: "DEPLOY & SCALE",
-    desc: "We ship to production, monitor performance and keep improving as your data and usage grow.",
+    desc: "We deploy, document and hand over the system. Quotes are fixed after scoping; payment follows an agreed deposit and milestones.",
   },
 ];
 

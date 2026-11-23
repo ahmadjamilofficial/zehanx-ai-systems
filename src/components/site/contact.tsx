@@ -19,15 +19,15 @@ export function Contact() {
           className="mt-6 text-4xl font-medium uppercase tracking-wide md:text-6xl xl:text-7xl"
           style={{ lineHeight: 0.95 }}
         >
-          TURN YOUR DATA{" "}
-          <span className="font-pixel text-[1.1em] font-normal">INTO</span>{" "}
-          PRODUCTION INTELLIGENCE
+          LET’S BUILD{" "}
+          <span className="font-pixel text-[1.1em] font-normal">YOUR NEXT</span>{" "}
+          PRODUCT
         </h2>
       </Reveal>
       <Reveal delay={100}>
         <p className="mt-6 max-w-xl text-sm leading-relaxed text-muted-foreground md:text-base">
-          No forms, no funnels. Reach us directly or book a slot on the calendar
-          — we reply fast. Tell us what business outcome you're trying to achieve, and we'll tell you honestly whether ML is the right path.
+          Tell us what you want to build. We scope the work, agree on milestones and provide a clear fixed-price proposal before development begins.
+
         </p>
       </Reveal>
 
@@ -132,6 +132,11 @@ export function Footer() {
           <a href="#services" className="transition-opacity hover:opacity-70">
             Services
           </a>
+          <a href="/pricing" className="transition-opacity hover:opacity-70">Pricing</a>
+          <a href="/insights" className="transition-opacity hover:opacity-70">Insights</a>
+          <a href="/privacy" className="transition-opacity hover:opacity-70">Privacy</a>
+          <a href="/terms" className="transition-opacity hover:opacity-70">Terms</a>
+          <a href="/security" className="transition-opacity hover:opacity-70">Security</a>
           <a
             href={`mailto:${EMAIL}`}
             className="transition-opacity hover:opacity-70"
