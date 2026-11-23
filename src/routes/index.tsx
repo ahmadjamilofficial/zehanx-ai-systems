@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { Navbar } from "@/components/site/navbar";
 import { Hero } from "@/components/site/hero";
+import { IdeaStudio } from "@/components/site/idea-studio";
 import { About, Marquee } from "@/components/site/about";
 import { Process, Services } from "@/components/site/services";
 import { Industries, Work } from "@/components/site/work";
@@ -10,9 +11,9 @@ import { EMAIL, CAL_URL, WHATSAPP_URL, X_URL } from "@/lib/site";
 import { useSmoothScroll } from "@/hooks/use-smooth-scroll";
 import { attachSoundTriggers } from "@/lib/sounds";
 
-const SITE_TITLE = "ZehanX Tech — Full-Stack ML Solutions | Data Infrastructure, Model Development & Applied AI";
+const SITE_TITLE = "ZehanX Tech — Software, Systems & AI Development";
 const SITE_DESCRIPTION =
-  "ZehanX Tech helps enterprises turn complex data into production-ready machine learning systems — from dataset engineering and model development to evaluation and deployment.";
+  "ZehanX Tech designs and builds custom software, business systems, websites and AI-powered products from idea to production.";
 
 const SITE_KEYWORDS = [
   "machine learning solutions",
@@ -211,6 +212,7 @@ function Index() {
       <Navbar />
       <main>
         <Hero />
+        <IdeaStudio />
         <Marquee />
         <About />
         <Services />
