@@ -20,14 +20,14 @@ export function Contact() {
           style={{ lineHeight: 0.95 }}
         >
           LET’S BUILD{" "}
-          <span className="font-pixel text-[1.1em] font-normal">INTO</span>{" "}
+          <span className="font-pixel text-[1.1em] font-normal">YOUR</span>{" "}
           YOUR NEXT SYSTEM
         </h2>
       </Reveal>
       <Reveal delay={100}>
         <p className="mt-6 max-w-xl text-sm leading-relaxed text-muted-foreground md:text-base">
           Tell us what you want to build. We scope the work, agree on milestones and provide a clear fixed-price proposal before development begins.
-          — we reply fast. Tell us what business outcome you're trying to achieve, and we'll tell you honestly whether ML is the right path.
+
         </p>
       </Reveal>
 
