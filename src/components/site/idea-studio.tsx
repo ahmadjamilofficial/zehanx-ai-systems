@@ -1,6 +1,6 @@
 import { useRef, useState, type FormEvent } from "react";
 import { ArrowUpRight, LoaderCircle, Mic, Send } from "lucide-react";
-import { CAL_URL, WHATSAPP_URL } from "@/lib/site";
+import { CAL_URL, EMAIL, WHATSAPP_URL } from "@/lib/site";
 import { Reveal } from "./reveal";
 
 type Message = { role: "user" | "assistant"; content: string };
@@ -29,7 +29,7 @@ export function IdeaStudio() {
   const [manualBudget, setManualBudget] = useState("Not specified");
   const [manualDeadline, setManualDeadline] = useState("Exploring");
   const [manualOwner, setManualOwner] = useState("");
-  const speechRef = useRef<SpeechRecognitionLike | null>(null);
+  const speechRef = useRef<SpeechRecognitionLike | null>(null);\n  const emailBody = encodeURIComponent([\n    "Hello ZehanX Tech,",\n    "",\n    "I would like to discuss a project.",\n    name ? `Name: ${name}` : "",\n    email ? `Reply email: ${email}` : "",\n    whatsapp ? `WhatsApp: ${whatsapp}` : "",\n    brief ? `Project brief:\\n${JSON.stringify(brief, null, 2)}` : "",\n    messages.length > 1 ? `Conversation:\\n${messages.map((m) => `${m.role}: ${m.content}`).join("\\n\\n")}` : "",\n  ].filter(Boolean).join("\\n"));\n  const emailHref = `mailto:${EMAIL}?subject=${encodeURIComponent("Project enquiry — ZehanX Tech")}&body=${emailBody}`;
   async function send(e: FormEvent) {
     e.preventDefault(); const value = input.trim();
     if (!value || busy || brief) return;
@@ -89,6 +89,6 @@ export function IdeaStudio() {
         <label className="text-xs text-muted-foreground md:col-span-2">Who approves the project?<input value={manualOwner} onChange={e=>setManualOwner(e.target.value)} className="mt-2 w-full border border-line bg-background p-3 text-sm"/></label>
         <button className="bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground md:col-span-2">Prepare my project brief</button>
       </form>}
-      {error&&<p role="alert" className="mt-4 text-sm text-accent">{error}</p>}</Reveal>
+      {error&&<div role="alert" className="mt-4 border border-line p-4"><p className="text-sm text-accent">{error}</p><p className="mt-2 text-xs text-muted-foreground">You can still reach the team directly. Your project details are added to the email draft when available.</p><div className="mt-3 flex flex-wrap gap-3"><a href={emailHref} className="inline-flex items-center gap-2 bg-primary px-4 py-3 text-xs font-semibold text-primary-foreground">EMAIL YOUR PROJECT</a><a href={CAL_URL} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 border border-line px-4 py-3 text-xs font-semibold">BOOK A MEETING <ArrowUpRight size={14}/></a></div></div>}</Reveal>
   </section>;
 }
