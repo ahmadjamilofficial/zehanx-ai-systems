@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { z } from "zod";
 import { runIdeaStudio } from "@/lib/ai/rewind";
+import { sendGmailMessages } from "@/lib/email/gmail";
 
 const Body = z.object({
   action: z.enum(["chat", "submit"]).default("chat"),
@@ -24,11 +25,11 @@ async function sendLeadEmail(body: z.infer<typeof Body>) {
     return Response.json({ error: "Name, email, brief and consent are required." }, { status: 400 });
   }
 
-  const mailKey = process.env.RESEND_API_KEY;
-  const to = process.env.LEADS_TO_EMAIL;
-  const from = process.env.LEADS_FROM_EMAIL;
-  if (!mailKey || !to || !from) {
-    console.error("Idea Studio email delivery is not configured.");
+  const user = process.env.GMAIL_USER?.trim();
+  const password = process.env.GMAIL_APP_PASSWORD;
+  const to = process.env.LEADS_TO_EMAIL?.trim();
+  if (!user || !password || !to || user.toLowerCase() !== "zehanxtech@gmail.com" || to.toLowerCase() !== "zehanxtech@gmail.com") {
+    console.error("Idea Studio Gmail delivery is not configured for the ZehanX mailbox.");
     return Response.json(
       { error: "Email delivery is not configured yet. Please contact us directly or book a call." },
       { status: 503 },
@@ -39,13 +40,10 @@ async function sendLeadEmail(body: z.infer<typeof Body>) {
     .map((message) => `${message.role.toUpperCase()}: ${message.content}`)
     .join("\n\n");
   const briefText = JSON.stringify(body.brief, null, 2);
-  const mail = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: { Authorization: `Bearer ${mailKey}`, "Content-Type": "application/json" },
-    body: JSON.stringify({
-      from,
-      to: [to],
-      reply_to: body.email,
+  try {
+    await sendGmailMessages([{
+      to,
+      replyTo: body.email,
       subject: `New ZehanX project enquiry: ${body.name}`,
       text: [
         "NEW ZEHANX TECH PROJECT ENQUIRY",
@@ -60,12 +58,9 @@ async function sendLeadEmail(body: z.infer<typeof Body>) {
         "DISCOVERY CONVERSATION",
         transcript || "No transcript supplied.",
       ].join("\n"),
-    }),
-    signal: AbortSignal.timeout(15000),
-  });
-  if (!mail.ok) {
-    const detail = await mail.text().catch(() => "");
-    console.error("Idea Studio team notification failed:", mail.status, detail.slice(0, 300));
+    }]);
+  } catch (error) {
+    console.error("Idea Studio team notification failed:", error instanceof Error ? error.message : "Unknown error");
     return Response.json(
       { error: "We couldn't email your project brief. Please try again or contact us directly." },
       { status: 502 },
@@ -108,18 +103,11 @@ async function sendLeadEmail(body: z.infer<typeof Body>) {
 
   // A visitor receipt is useful, but it must never undo successful team delivery.
   try {
-    const receipt = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: { Authorization: `Bearer ${mailKey}`, "Content-Type": "application/json" },
-      body: JSON.stringify({
-        from,
-        to: [body.email],
-        subject: "We received your ZehanX project brief",
-        text: `Hi ${body.name},\n\nThanks for sharing your project with ZehanX Tech. We have received your brief and will review it. The AI-generated plan is preliminary; scope, pricing and delivery are confirmed after a human review.\n\n${briefText}\n\nBook a call: https://cal.com/zehanx-technologies-official`,
-      }),
-      signal: AbortSignal.timeout(10000),
-    });
-    if (!receipt.ok) console.error("Idea Studio visitor confirmation failed:", receipt.status);
+    await sendGmailMessages([{
+      to: body.email,
+      subject: "We received your ZehanX project brief",
+      text: `Hi ${body.name},\n\nThanks for sharing your project with ZehanX Tech. We have received your brief and will review it. The AI-generated plan is preliminary; scope, pricing and delivery are confirmed after a human review.\n\n${briefText}\n\nBook a call: https://cal.com/zehanx-technologies-official`,
+    }]);
   } catch (error) {
     console.error("Idea Studio visitor confirmation failed:", error instanceof Error ? error.message : "Unknown error");
   }
