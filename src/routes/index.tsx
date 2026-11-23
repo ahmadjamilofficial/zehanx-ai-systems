@@ -3,6 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Navbar } from "@/components/site/navbar";
 import { Hero } from "@/components/site/hero";
 import { IdeaStudio } from "@/components/site/idea-studio";
+import { ExitPrompt } from "@/components/site/exit-prompt";
 import { About, Marquee } from "@/components/site/about";
 import { Process, Services } from "@/components/site/services";
 import { Industries, Work } from "@/components/site/work";
@@ -167,6 +168,7 @@ function Index() {
         <Contact />
       </main>
       <Footer />
+      <ExitPrompt />
     </div>
   );
 }
