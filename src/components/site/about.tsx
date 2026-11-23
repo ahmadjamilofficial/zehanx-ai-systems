@@ -2,14 +2,18 @@ import { Reveal } from "./reveal";
 import coreImg from "@/assets/about-core.jpg";
 
 const MARQUEE_ITEMS = [
-  "DATA INFRASTRUCTURE",
+  "CUSTOM SOFTWARE",
+  "BUSINESS SYSTEMS",
+  "WEBSITES & E-COMMERCE",
   "MODEL DEVELOPMENT",
+  "WORKFLOW AUTOMATION",
   "MODEL EVALUATION",
   "APPLIED AI SYSTEMS",
   "DATASET ENGINEERING",
   "COMPUTER VISION",
   "NLP",
   "PRODUCTION ML",
+  "DATA ENGINEERING",
 ];
 
 export function Marquee() {
@@ -61,13 +65,13 @@ export function About() {
           <Reveal delay={120}>
             <div className="mt-8 max-w-xl space-y-4 text-sm leading-relaxed text-muted-foreground md:text-base">
               <p>
-                ZehanX Tech helps enterprises turn complex data into production-ready machine learning systems — from dataset engineering and model development to evaluation and deployment.
+                ZehanX Tech designs and builds the digital products businesses depend on: custom software, websites, operational systems and automation.
               </p>
               <p>
-                We don't just build prototypes. We deliver measurable business outcomes: reduced costs, better decisions, less manual work, and competitive advantages through AI that actually works in your existing systems.
+                From discovery to deployment, we align the product with your users, workflows, integrations and operating constraints.
               </p>
               <p>
-                Our approach combines deep ML expertise with practical engineering — data infrastructure you can trust, models that meet production standards, and systems that integrate seamlessly with your operations.
+                AI and machine learning strengthen the work where they add value; they are part of our toolkit, not the only thing we build.
               </p>
             </div>
           </Reveal>
