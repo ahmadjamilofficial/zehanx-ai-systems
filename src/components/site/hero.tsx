@@ -195,7 +195,7 @@ export function Hero() {
               What we do
             </p>
             <p className="max-w-[240px] text-sm leading-relaxed text-foreground/90">
-              We engineer machine-learning systems that help organizations turn data into measurable business outcomes
+              We design and build software, websites and business systems, with AI as an engineering advantage
             </p>
           </div>
           <div>
@@ -220,13 +220,13 @@ export function Hero() {
               className="text-3xl uppercase tracking-wide sm:text-4xl md:text-5xl lg:text-[3.75rem] xl:text-[4.25rem]"
               style={{ lineHeight: 0.88 }}
             >
-              FROM COMPLEX
+              SOFTWARE, SYSTEMS
               <br />
               <span className="inline-block font-pixel text-[1.25em] font-normal leading-none">
                 DATA
               </span>
               <br />
-              TO PRODUCTION-READY
+              ENGINEERED WITH
               <br />
               <span className="inline-block font-pixel text-[1.25em] font-normal leading-none">
                 INTELLIGENCE
