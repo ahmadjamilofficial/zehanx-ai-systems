@@ -1,0 +1,20 @@
+# ZehanX Tech
+
+> ZehanX Tech designs and builds software, business systems, websites and AI-powered products from idea to production.
+
+## Services
+- Custom software and web applications
+- Business systems and workflow automation
+- Websites and e-commerce
+- AI and machine-learning systems
+- Data engineering and dataset services
+- ZehanX ML Platform
+
+## Delivery
+Projects are scoped with the client. Scope, deliverables, price, milestones and timeline are confirmed in a written proposal. The Idea Studio output is a preliminary AI-prepared draft, not a binding quote.
+
+## Contact
+- Website: https://zehanxtech.vercel.app
+- Email: zehanxtech@gmail.com
+- WhatsApp (text): https://wa.me/923338188722
+- Book a call: https://cal.com/zehanx-technologies-official
