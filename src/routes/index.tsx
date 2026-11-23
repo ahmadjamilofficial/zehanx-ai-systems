@@ -16,21 +16,14 @@ const SITE_DESCRIPTION =
   "ZehanX Tech designs and builds custom software, business systems, websites and AI-powered products from idea to production.";
 
 const SITE_KEYWORDS = [
-  "machine learning solutions",
-  "ML data infrastructure",
-  "model development services",
-  "model evaluation",
-  "applied AI systems",
-  "enterprise ML consulting",
-  "dataset engineering",
-  "data annotation",
-  "synthetic data generation",
-  "model fine-tuning",
-  "computer vision services",
-  "NLP solutions",
-  "ML deployment",
-  "production AI systems",
-  "MLOps consulting",
+  "software development company Pakistan",
+  "custom software development",
+  "website development company",
+  "business automation software",
+  "WhatsApp automation for business",
+  "AI development company",
+  "machine learning company Pakistan",
+  "data engineering and dataset services",
 ];
 
 export const Route = createFileRoute("/")({
@@ -63,27 +56,12 @@ export const Route = createFileRoute("/")({
           "@type": "Organization",
           name: "ZehanX Tech",
           alternateName: "ZehanX Technologies",
-          legalName: "ZehanX Technologies",
           url: "https://zehanxtech.vercel.app",
           slogan: "From complex data to production-ready intelligence",
           description: SITE_DESCRIPTION,
           email: EMAIL,
           telephone: "+92-333-8188722",
-          areaServed: {
-            "@type": "GeoCircle",
-            geoMidpoint: {
-              "@type": "GeoCoordinates",
-              latitude: "24.8607",
-              longitude: "67.0011",
-            },
-            geoRadius: "1000000",
-          },
-          address: {
-            "@type": "PostalAddress",
-            addressCountry: "PK",
-            addressRegion: "Sindh",
-            addressLocality: "Karachi",
-          },
+          areaServed: { "@type": "Country", name: "Pakistan" },
           contactPoint: {
             "@type": "ContactPoint",
             telephone: "+92-333-8188722",
@@ -109,7 +87,7 @@ export const Route = createFileRoute("/")({
             "Model Deployment",
             "Production ML",
           ],
-          sameAs: [CAL_URL, WHATSAPP_URL, X_URL],
+          sameAs: [X_URL],
           hasOfferCatalog: {
             "@type": "OfferCatalog",
             name: "ML Solutions Services",
@@ -161,39 +139,6 @@ export const Route = createFileRoute("/")({
               position: 1,
               name: "Home",
               item: "https://zehanxtech.vercel.app",
-            },
-          ],
-        }),
-      },
-      {
-        type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "FAQPage",
-          mainEntity: [
-            {
-              "@type": "Question",
-              name: "What services does ZehanX Tech provide?",
-              acceptedAnswer: {
-                "@type": "Answer",
-                text: "ZehanX Tech provides four core ML services: ML Data Solutions (dataset engineering, data cleaning, annotation, synthetic data generation), Model Development & Evaluation (classical ML, deep learning, computer vision, NLP, model fine-tuning), Applied AI Systems (building and deploying production AI systems), and ML Consulting (enterprise advisory for ML strategy and implementation).",
-              },
-            },
-            {
-              "@type": "Question",
-              name: "Does ZehanX Tech work with enterprises?",
-              acceptedAnswer: {
-                "@type": "Answer",
-                text: "Yes, ZehanX Tech specializes in enterprise ML solutions, helping organizations turn complex data into production-ready machine learning systems with measurable business outcomes.",
-              },
-            },
-            {
-              "@type": "Question",
-              name: "What industries does ZehanX Tech serve?",
-              acceptedAnswer: {
-                "@type": "Answer",
-                text: "ZehanX Tech serves finance and banking, healthcare, retail and e-commerce, manufacturing, logistics and supply chain, telecom, energy and utilities, and education sectors.",
-              },
             },
           ],
         }),
