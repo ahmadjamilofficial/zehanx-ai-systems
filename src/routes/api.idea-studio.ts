@@ -37,7 +37,7 @@ async function sendLeadEmail(body: z.infer<typeof Body>) {
 
   const transcript = (body.messages || [])
     .map((message) => `${message.role.toUpperCase()}: ${message.content}`)
-    .join("\\n\\n");
+    .join("\n\n");
   const briefText = JSON.stringify(body.brief, null, 2);
   const mail = await fetch("https://api.resend.com/emails", {
     method: "POST",
@@ -59,7 +59,7 @@ async function sendLeadEmail(body: z.infer<typeof Body>) {
         "",
         "DISCOVERY CONVERSATION",
         transcript || "No transcript supplied.",
-      ].join("\\n"),
+      ].join("\n"),
     }),
     signal: AbortSignal.timeout(15000),
   });
@@ -79,7 +79,7 @@ async function sendLeadEmail(body: z.infer<typeof Body>) {
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (url && key) {
     try {
-      const response = await fetch(`${url.replace(/\\/+$/, "")}/rest/v1/idea_studio_leads`, {
+      const response = await fetch(`${url.replace(/\/+$/, "")}/rest/v1/idea_studio_leads`, {
         method: "POST",
         headers: {
           apikey: key,
@@ -115,7 +115,7 @@ async function sendLeadEmail(body: z.infer<typeof Body>) {
         from,
         to: [body.email],
         subject: "We received your ZehanX project brief",
-        text: `Hi ${body.name},\\n\\nThanks for sharing your project with ZehanX Tech. We have received your brief and will review it. The AI-generated plan is preliminary; scope, pricing and delivery are confirmed after a human review.\\n\\n${briefText}\\n\\nBook a call: https://cal.com/zehanx-technologies-official`,
+        text: `Hi ${body.name},\n\nThanks for sharing your project with ZehanX Tech. We have received your brief and will review it. The AI-generated plan is preliminary; scope, pricing and delivery are confirmed after a human review.\n\n${briefText}\n\nBook a call: https://cal.com/zehanx-technologies-official`,
       }),
       signal: AbortSignal.timeout(10000),
     });
