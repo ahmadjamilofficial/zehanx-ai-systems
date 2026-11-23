@@ -1,7 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Navbar } from "@/components/site/navbar";
 import { IdeaStudio } from "@/components/site/idea-studio";
-import { Footer } from "@/components/site/contact";
 
 export const Route = createFileRoute("/idea-studio")({
   component: IdeaStudioPage,
@@ -19,12 +17,6 @@ export const Route = createFileRoute("/idea-studio")({
 
 function IdeaStudioPage() {
   return (
-    <div className="min-h-screen w-full bg-background text-foreground">
-      <Navbar />
-      <main className="pt-16">
-        <IdeaStudio />
-      </main>
-      <Footer />
-    </div>
+    <IdeaStudio />
   );
 }
