@@ -1,14 +1,53 @@
-import { useRef, useState, type FormEvent } from "react";
-import { ArrowUpRight, LoaderCircle, Mic, Send } from "lucide-react";
-import { CAL_URL, EMAIL, WHATSAPP_URL } from "@/lib/site";
-import { Reveal } from "./reveal";
+import { useEffect, useRef, useState, type FormEvent, type KeyboardEvent } from "react";
+import { ArrowUp, Check, LoaderCircle, Paperclip, RotateCcw, Sparkles } from "lucide-react";
 
 type Message = { role: "user" | "assistant"; content: string };
-type Brief = { projectType: string; summary: string; features: string[]; risks: string[]; urgency: string; budgetBand: string; dataReadiness: string };
-type SpeechResult = { results: ArrayLike<ArrayLike<{ transcript: string }>> };
-type SpeechRecognitionLike = { lang: string; onresult: ((event: SpeechResult) => void) | null; onerror: (() => void) | null; start: () => void };
-type SpeechRecognitionCtor = new () => SpeechRecognitionLike;
-const greeting: Message = { role: "assistant", content: "Tell me what you want to build or improve. I’ll ask a few focused questions about your users, current process, data, budget and timeline, then prepare a project brief." };
+type Brief = {
+  projectType: string;
+  summary: string;
+  features: string[];
+  risks: string[];
+  urgency: string;
+  budgetBand: string;
+  dataReadiness: string;
+};
+const greeting: Message = {
+  role: "assistant",
+  content: "Hi. I'm the ZehanX project assistant. Tell me what you're thinking of building, what isn't working today, or what you'd like to improve. I'll explore the idea with you, ask relevant follow-up questions one at a time, and turn our conversation into a clear project brief.\n\nWhere would you like to start?"
+};
+
+function Report({ brief }: { brief: Brief }) {
+  return (
+    <article className="mt-4 overflow-hidden rounded-2xl border border-white/10 bg-[#171717]">
+      <div className="flex items-center gap-2 border-b border-white/10 px-4 py-3 text-xs text-white/60">
+        <Sparkles size={14} className="text-red-400" />
+        <span>ZEHANX PROJECT REPORT</span>
+        <span className="ml-auto rounded-full border border-white/10 px-2 py-1 text-[10px]">AI DRAFT</span>
+      </div>
+      <div className="space-y-5 p-4 sm:p-6">
+        <div>
+          <p className="text-[11px] uppercase tracking-[0.18em] text-white/40">Project direction</p>
+          <h3 className="mt-2 text-lg font-semibold capitalize text-white">{brief.projectType.replaceAll("-", " ")}</h3>
+          <p className="mt-2 whitespace-pre-wrap text-sm leading-7 text-white/75">{brief.summary}</p>
+        </div>
+        <div>
+          <p className="text-[11px] uppercase tracking-[0.18em] text-white/40">Potential capabilities</p>
+          <ul className="mt-2 space-y-2">{brief.features.map((item) => <li key={item} className="flex gap-2 text-sm leading-6 text-white/75"><span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-red-400" />{item}</li>)}</ul>
+        </div>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <div><p className="text-[11px] uppercase tracking-[0.18em] text-white/40">Timing</p><p className="mt-2 text-sm text-white/75">{brief.urgency}</p></div>
+          <div><p className="text-[11px] uppercase tracking-[0.18em] text-white/40">Budget indication</p><p className="mt-2 text-sm text-white/75">{brief.budgetBand}</p></div>
+          <div className="sm:col-span-2"><p className="text-[11px] uppercase tracking-[0.18em] text-white/40">Data and integrations</p><p className="mt-2 text-sm leading-6 text-white/75">{brief.dataReadiness}</p></div>
+        </div>
+        <div>
+          <p className="text-[11px] uppercase tracking-[0.18em] text-white/40">Open questions and risks</p>
+          <ul className="mt-2 space-y-2">{brief.risks.map((item) => <li key={item} className="text-sm leading-6 text-white/60">• {item}</li>)}</ul>
+        </div>
+        <p className="border-t border-white/10 pt-4 text-xs leading-5 text-white/40">This is an initial discovery report, not a binding quote or delivery commitment. Our team will validate scope, feasibility, pricing and timing with you.</p>
+      </div>
+    </article>
+  );
+}
 
 export function IdeaStudio() {
   const [messages, setMessages] = useState<Message[]>([greeting]);
@@ -18,89 +57,137 @@ export function IdeaStudio() {
   const [error, setError] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [whatsapp, setWhatsapp] = useState("");
   const [consent, setConsent] = useState(false);
-  const [saved, setSaved] = useState(false);
-  const [manual, setManual] = useState(false);
-  const [manualGoal, setManualGoal] = useState("");
-  const [manualUsers, setManualUsers] = useState("");
-  const [manualProcess, setManualProcess] = useState("");
-  const [manualData, setManualData] = useState("");
-  const [manualBudget, setManualBudget] = useState("Not specified");
-  const [manualDeadline, setManualDeadline] = useState("Exploring");
-  const [manualOwner, setManualOwner] = useState("");
-  const speechRef = useRef<SpeechRecognitionLike | null>(null);
-  const lineBreak = String.fromCharCode(10);
-  const emailBody = encodeURIComponent([
-    "Hello ZehanX Tech,",
-    "",
-    "I would like to discuss a project.",
-    name ? `Name: ${name}` : "",
-    email ? `Reply email: ${email}` : "",
-    whatsapp ? `WhatsApp: ${whatsapp}` : "",
-    brief ? `Project brief:${lineBreak}${JSON.stringify(brief, null, 2)}` : "",
-    messages.length > 1 ? `Conversation:${lineBreak}${messages.slice(-8).map((m) => `${m.role}: ${m.content.slice(0, 500)}`).join(lineBreak + lineBreak)}` : "",
-  ].filter(Boolean).join(lineBreak));
-  const emailHref = `mailto:${EMAIL}?subject=${encodeURIComponent("Project enquiry — ZehanX Tech")}&body=${emailBody}`;
-  async function send(e: FormEvent) {
-    e.preventDefault(); const value = input.trim();
-    if (!value || busy || brief) return;
-    const next = [...messages, { role: "user" as const, content: value }];
-    setMessages(next); setInput(""); setBusy(true); setError("");
+  const [sent, setSent] = useState(false);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
+  }, [messages, busy, brief]);
+
+  function resizeInput() {
+    const el = inputRef.current;
+    if (!el) return;
+    el.style.height = "auto";
+    el.style.height = Math.min(el.scrollHeight, 180) + "px";
+  }
+
+  async function sendMessage(value = input) {
+    const content = value.trim();
+    if (!content || busy || brief) return;
+    const next = [...messages, { role: "user" as const, content }];
+    setMessages(next);
+    setInput("");
+    if (inputRef.current) inputRef.current.style.height = "auto";
+    setBusy(true);
+    setError("");
     try {
-      const response = await fetch("/api/idea-studio", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ action: "chat", messages: next }) });
-      const data = await response.json(); if (!response.ok) throw new Error(data.error || "Please try again.");
-      setMessages([...next, { role: "assistant", content: data.reply }]); if (data.complete && data.brief) setBrief(data.brief);
-    } catch (err) { setError(err instanceof Error ? err.message : "Idea Studio is unavailable."); setManual(true); } finally { setBusy(false); }
+      const response = await fetch("/api/idea-studio", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "chat", messages: next })
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || "I couldn't complete that response. Please try again.");
+      setMessages([...next, { role: "assistant", content: data.reply }]);
+      if (data.complete && data.brief) setBrief(data.brief);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "The assistant is temporarily unavailable.");
+    } finally {
+      setBusy(false);
+      inputRef.current?.focus();
+    }
   }
-  function startVoiceInput() {
-    const browser = window as Window & { SpeechRecognition?: SpeechRecognitionCtor; webkitSpeechRecognition?: SpeechRecognitionCtor };
-    const Speech = browser.SpeechRecognition || browser.webkitSpeechRecognition;
-    if (!Speech) { setError("Voice input is not supported in this browser. You can type your idea instead."); return; }
-    const recognition = new Speech();
-    recognition.lang = navigator.language || "en-US";
-    recognition.onresult = (event) => setInput((current) => `${current}${current ? " " : ""}${event.results[0][0].transcript}`);
-    recognition.onerror = () => setError("Voice input stopped. Please try again or type your idea.");
-    speechRef.current = recognition;
-    recognition.start();
+
+  function onKeyDown(event: KeyboardEvent<HTMLTextAreaElement>) {
+    if (event.key === "Enter" && !event.shiftKey) {
+      event.preventDefault();
+      void sendMessage();
+    }
   }
-  function useManualBrief(e: FormEvent) {
-    e.preventDefault();
-    setBrief({ projectType: "other", summary: `Goal: ${manualGoal}. Users: ${manualUsers}. Current process: ${manualProcess}. Decision-maker: ${manualOwner || "Not specified"}.`, features: [], risks: ["Technical feasibility and integrations require a scoping review."], urgency: manualDeadline, budgetBand: manualBudget, dataReadiness: manualData || "Not yet assessed; confirm available data during scoping." });
-    setMessages([...messages, { role: "user", content: `Manual project brief: ${manualGoal}` }]);
-    setManual(false);
-  }
-  async function submitLead(e: FormEvent) {
-    e.preventDefault(); if (!brief || !consent || busy) return; setBusy(true); setError("");
+
+  async function submitReport(event: FormEvent) {
+    event.preventDefault();
+    if (!brief || !consent || busy || sent) return;
+    setBusy(true);
+    setError("");
     try {
-      const response = await fetch("/api/idea-studio", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ action: "submit", messages, brief, name, email, whatsapp, consent }) });
-      const data = await response.json(); if (!response.ok) throw new Error(data.error || "Unable to submit.");
-      setSaved(true);
-    } catch (err) { setError(err instanceof Error ? err.message : "Unable to submit your brief."); } finally { setBusy(false); }
+      const response = await fetch("/api/idea-studio", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "submit", messages, brief, name, email, consent: true })
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || "We couldn't send your report. Please try again.");
+      setSent(true);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "We couldn't send your report.");
+    } finally {
+      setBusy(false);
+    }
   }
-  return <section id="idea-studio" className="scroll-mt-20 border-t border-line px-5 py-24 sm:px-6 md:px-10 md:py-32 lg:px-14" aria-labelledby="idea-studio-heading">
-    <Reveal><p className="font-pixel text-sm uppercase tracking-widest text-muted-foreground">01 / Idea Studio</p><h2 id="idea-studio-heading" className="mt-6 text-3xl font-medium uppercase tracking-wide md:text-5xl">START WITH AN <span className="font-pixel text-[1.15em]">IDEA</span></h2><p className="mt-5 max-w-2xl text-sm leading-relaxed text-muted-foreground md:text-base">Describe the problem. Our AI-assisted discovery flow shapes it into a practical starting brief. No account required.</p></Reveal>
-    <Reveal delay={100}><div className="mt-10 grid gap-8 lg:grid-cols-[1.2fr_0.8fr]">
-      <div className="border border-line bg-card/40"><div className="border-b border-line px-5 py-4"><p className="font-pixel text-xs tracking-widest text-muted-foreground">ZEHANX / PROJECT DISCOVERY</p></div>
-        <div className="max-h-[420px] space-y-4 overflow-y-auto p-5" aria-live="polite">{messages.map((m,i)=><div key={i} className={m.role==="user"?"ml-8 bg-foreground/10 p-4 text-sm":"mr-8 border border-line p-4 text-sm text-muted-foreground"}><p className="mb-2 font-pixel text-[10px] tracking-widest text-accent">{m.role==="user"?"YOU":"IDEA STUDIO"}</p><p className="leading-relaxed">{m.content}</p></div>)}{busy&&<div className="flex items-center gap-2 text-xs text-muted-foreground"><LoaderCircle size={14} className="animate-spin"/>Thinking through your project…</div>}</div>
-        {!brief&&!manual&&<form onSubmit={send} className="flex gap-2 border-t border-line p-4"><label className="sr-only" htmlFor="idea-message">Describe your project</label><textarea id="idea-message" value={input} onChange={e=>setInput(e.target.value)} rows={2} maxLength={1600} placeholder="I want to build…" className="min-w-0 flex-1 resize-y border border-line bg-background px-3 py-3 text-sm outline-none focus:border-accent"/><button type="button" onClick={startVoiceInput} aria-label="Use voice input" className="self-end border border-line p-3 text-foreground"><Mic size={18}/></button><button type="submit" disabled={busy||!input.trim()} aria-label="Send message" className="self-end bg-primary p-3 text-primary-foreground disabled:opacity-40"><Send size={18}/></button></form>}
+
+  function startOver() {
+    setMessages([greeting]);
+    setBrief(null);
+    setInput("");
+    setError("");
+    setSent(false);
+    setName("");
+    setEmail("");
+    setConsent(false);
+  }
+
+  return (
+    <main className="min-h-[calc(100svh-64px)] bg-[#212121] text-[#ececec]">
+      <div className="mx-auto flex min-h-[calc(100svh-64px)] w-full max-w-4xl flex-col px-3 sm:px-6">
+        <header className="sticky top-16 z-20 flex items-center justify-between border-b border-white/10 bg-[#212121]/95 py-3 backdrop-blur sm:py-4">
+          <div className="flex min-w-0 items-center gap-3">
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/10"><Sparkles size={17} /></div>
+            <div className="min-w-0"><h1 className="truncate text-sm font-semibold">ZehanX Project Assistant</h1><p className="text-xs text-white/45">Project discovery · AI assistant</p></div>
+          </div>
+          <button type="button" onClick={startOver} className="flex items-center gap-2 rounded-lg px-3 py-2 text-xs text-white/60 transition hover:bg-white/10 hover:text-white"><RotateCcw size={14} /><span className="hidden sm:inline">New conversation</span></button>
+        </header>
+
+        <section ref={scrollRef} className="flex-1 space-y-7 overflow-y-auto py-7 sm:py-10" aria-label="Conversation" aria-live="polite">
+          {messages.map((message, index) => (
+            <div key={index} className={message.role === "user" ? "flex justify-end" : "flex items-start gap-3 sm:gap-4"}>
+              {message.role === "assistant" && <div className="mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/10"><Sparkles size={15} /></div>}
+              <div className={message.role === "user" ? "max-w-[88%] rounded-3xl bg-[#303030] px-4 py-3 text-sm leading-7 sm:max-w-[80%] sm:px-5" : "min-w-0 max-w-[calc(100%-44px)] flex-1 pt-1 text-sm leading-7 text-white/85 sm:text-[15px]"}>
+                <p className="whitespace-pre-wrap">{message.content}</p>
+                {brief && index === messages.length - 1 && <Report brief={brief} />}
+              </div>
+            </div>
+          ))}
+          {busy && <div className="flex items-start gap-3 sm:gap-4"><div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/10"><Sparkles size={15} /></div><div className="flex items-center gap-2 pt-2 text-sm text-white/50"><span className="flex gap-1"><i className="h-1.5 w-1.5 animate-bounce rounded-full bg-white/60 [animation-delay:-0.2s]" /><i className="h-1.5 w-1.5 animate-bounce rounded-full bg-white/60 [animation-delay:-0.1s]" /><i className="h-1.5 w-1.5 animate-bounce rounded-full bg-white/60" /></span><span>Thinking</span></div></div>}
+          {brief && <div className="ml-11 max-w-2xl">
+            {sent ? <div className="flex items-center gap-2 rounded-2xl border border-emerald-500/20 bg-emerald-500/10 p-4 text-sm text-emerald-200"><Check size={17} /> Your report has been sent. ZehanX Tech will review it and reply to {email}.</div> :
+              <form onSubmit={submitReport} className="space-y-3 rounded-2xl border border-white/10 bg-[#171717] p-4 sm:p-5">
+                <p className="text-sm font-medium">Where should we send your project report?</p>
+                <div className="grid gap-3 sm:grid-cols-2">
+                  <input required minLength={2} maxLength={100} value={name} onChange={(e) => setName(e.target.value)} placeholder="Your name" autoComplete="name" className="min-w-0 rounded-xl border border-white/10 bg-[#242424] px-3 py-3 text-sm outline-none transition focus:border-white/30" />
+                  <input required type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Your email" autoComplete="email" className="min-w-0 rounded-xl border border-white/10 bg-[#242424] px-3 py-3 text-sm outline-none transition focus:border-white/30" />
+                </div>
+                <label className="flex items-start gap-2 text-xs leading-5 text-white/50"><input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} required className="mt-1 accent-red-500" /><span>I agree to the <a href="/privacy" className="underline underline-offset-2">Privacy Policy</a> and consent to ZehanX Tech receiving this conversation and project report.</span></label>
+                <button type="submit" disabled={busy || !consent} className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-white px-4 py-3 text-sm font-semibold text-black transition hover:bg-white/85 disabled:cursor-not-allowed disabled:opacity-40 sm:w-auto">Send report to ZehanX <ArrowUp size={15} /></button>
+              </form>}
+          </div>}
+          {error && <div role="alert" className="ml-11 rounded-xl border border-red-400/20 bg-red-400/5 p-3 text-sm text-red-200">{error}</div>}
+        </section>
+
+        {!brief && <div className="sticky bottom-0 bg-gradient-to-t from-[#212121] via-[#212121] to-transparent pb-4 pt-3 sm:pb-6">
+          <form onSubmit={(event) => { event.preventDefault(); void sendMessage(); }} className="rounded-3xl border border-white/10 bg-[#303030] p-2 shadow-2xl transition focus-within:border-white/20">
+            <label htmlFor="idea-message" className="sr-only">Message the ZehanX project assistant</label>
+            <textarea ref={inputRef} id="idea-message" value={input} onChange={(event) => { setInput(event.target.value); resizeInput(); }} onKeyDown={onKeyDown} rows={1} maxLength={1600} placeholder="Describe what you'd like to build…" className="max-h-[180px] min-h-[44px] w-full resize-none bg-transparent px-3 py-3 text-sm leading-6 text-white outline-none placeholder:text-white/40" />
+            <div className="flex items-center justify-between px-1 pb-1">
+              <span className="px-2 text-[11px] text-white/35">Enter to send · Shift + Enter for a new line</span>
+              <button type="submit" aria-label="Send message" disabled={busy || !input.trim()} className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-black transition hover:bg-white/80 disabled:cursor-not-allowed disabled:opacity-30"><ArrowUp size={18} /></button>
+            </div>
+          </form>
+          <p className="mt-3 text-center text-[10px] leading-4 text-white/30">Do not share passwords, payment details or sensitive personal information. AI-generated plans are reviewed by our team.</p>
+        </div>}
       </div>
-      <div>{brief?<div className="border border-line p-5"><p className="font-pixel text-xs tracking-widest text-accent">PRELIMINARY PROJECT BRIEF</p><h3 className="mt-4 text-xl font-semibold capitalize">{brief.projectType.replaceAll("-"," ")}</h3><p className="mt-3 text-sm leading-relaxed text-muted-foreground">{brief.summary}</p><h4 className="mt-5 text-xs font-semibold uppercase tracking-widest">Potential features</h4><ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-muted-foreground">{brief.features.map(x=><li key={x}>{x}</li>)}</ul><h4 className="mt-5 text-xs font-semibold uppercase tracking-widest">Budget band</h4><p className="mt-2 text-sm text-muted-foreground">{brief.budgetBand}</p><h4 className="mt-5 text-xs font-semibold uppercase tracking-widest">Data readiness</h4><p className="mt-2 text-sm text-muted-foreground">{brief.dataReadiness}</p><h4 className="mt-5 text-xs font-semibold uppercase tracking-widest">Risks and unknowns</h4><ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-muted-foreground">{brief.risks.map(x=><li key={x}>{x}</li>)}</ul><p className="mt-5 text-xs text-muted-foreground">Budget and timeline are confirmed after scope review. This draft is not a binding quote.</p><p className="mt-4 border-t border-line pt-4 text-xs text-muted-foreground">AI-prepared draft. A member of our team confirms the quote within 24 working hours.</p>
-        {!saved?<form onSubmit={submitLead} className="mt-5 space-y-3"><input required minLength={2} maxLength={100} value={name} onChange={e=>setName(e.target.value)} placeholder="Your name" className="w-full border border-line bg-background px-3 py-3 text-sm"/><input required type="email" value={email} onChange={e=>setEmail(e.target.value)} placeholder="Email address" className="w-full border border-line bg-background px-3 py-3 text-sm"/><input value={whatsapp} onChange={e=>setWhatsapp(e.target.value)} placeholder="WhatsApp (optional)" className="w-full border border-line bg-background px-3 py-3 text-sm"/><label className="flex gap-2 text-xs text-muted-foreground"><input type="checkbox" checked={consent} onChange={e=>setConsent(e.target.checked)} required/>I agree to the <a href="/privacy" className="text-accent underline">Privacy Policy</a> and consent to this enquiry being sent to ZehanX Tech.</label><button disabled={busy||!consent} className="w-full bg-primary px-4 py-3 text-sm font-semibold text-primary-foreground disabled:opacity-40">Send my project brief</button></form>:<p className="mt-5 text-sm text-accent">Your project brief has been emailed to our team. We’ll review it and follow up at the email address you provided.</p>}
-        <div className="mt-4 flex flex-wrap gap-3 text-sm"><a href={CAL_URL} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-accent">Book a call <ArrowUpRight size={14}/></a><a href={WHATSAPP_URL} target="_blank" rel="noreferrer" className="text-muted-foreground underline">WhatsApp</a></div>
-      </div>:<div className="border border-line p-5"><p className="font-pixel text-xs tracking-widest text-muted-foreground">WHAT WE’LL CLARIFY</p><ul className="mt-4 space-y-3 text-sm text-muted-foreground">{["The outcome you want","Who will use the product","Your current process and tools","Data and integrations available","Budget range and target deadline","Who approves the project"].map(x=><li key={x} className="border-b border-line pb-3">{x}</li>)}</ul><p className="mt-4 text-xs text-muted-foreground">Please do not share passwords, payment details or sensitive personal information.</p></div>}</div>
-    </div>
-      {manual && !brief && <form onSubmit={useManualBrief} className="mt-6 grid gap-3 border border-line p-5 md:grid-cols-2">
-        <p className="font-pixel text-xs tracking-widest text-accent md:col-span-2">MANUAL PROJECT BRIEF / AI FALLBACK</p>
-        <label className="text-xs text-muted-foreground">What do you want to achieve?<textarea required value={manualGoal} onChange={e=>setManualGoal(e.target.value)} className="mt-2 w-full border border-line bg-background p-3 text-sm" rows={3}/></label>
-        <label className="text-xs text-muted-foreground">Who will use it?<input required value={manualUsers} onChange={e=>setManualUsers(e.target.value)} className="mt-2 w-full border border-line bg-background p-3 text-sm"/></label>
-        <label className="text-xs text-muted-foreground">Current process and tools<textarea value={manualProcess} onChange={e=>setManualProcess(e.target.value)} className="mt-2 w-full border border-line bg-background p-3 text-sm" rows={3}/></label>
-        <label className="text-xs text-muted-foreground">Available data and integrations<textarea value={manualData} onChange={e=>setManualData(e.target.value)} className="mt-2 w-full border border-line bg-background p-3 text-sm" rows={3}/></label>
-        <label className="text-xs text-muted-foreground">Budget band<select value={manualBudget} onChange={e=>setManualBudget(e.target.value)} className="mt-2 w-full border border-line bg-background p-3 text-sm"><option>Not specified</option><option>Under 1k (currency to confirm)</option><option>1k–5k (currency to confirm)</option><option>5k–15k (currency to confirm)</option><option>15k+ (currency to confirm)</option></select></label>
-        <label className="text-xs text-muted-foreground">Target deadline<select value={manualDeadline} onChange={e=>setManualDeadline(e.target.value)} className="mt-2 w-full border border-line bg-background p-3 text-sm"><option>Exploring</option><option>Within 1 month</option><option>1–3 months</option><option>3+ months</option><option>Urgent</option></select></label>
-        <label className="text-xs text-muted-foreground md:col-span-2">Who approves the project?<input value={manualOwner} onChange={e=>setManualOwner(e.target.value)} className="mt-2 w-full border border-line bg-background p-3 text-sm"/></label>
-        <button className="bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground md:col-span-2">Prepare my project brief</button>
-      </form>}
-      {error&&<div role="alert" className="mt-4 border border-line p-4"><p className="text-sm text-accent">{error}</p><p className="mt-2 text-xs text-muted-foreground">You can still reach the team directly. Your project details are added to the email draft when available.</p><div className="mt-3 flex flex-wrap gap-3"><a href={emailHref} className="inline-flex items-center gap-2 bg-primary px-4 py-3 text-xs font-semibold text-primary-foreground">EMAIL YOUR PROJECT</a><a href={CAL_URL} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 border border-line px-4 py-3 text-xs font-semibold">BOOK A MEETING <ArrowUpRight size={14}/></a></div></div>}</Reveal>
-  </section>;
+    </main>
+  );
 }
