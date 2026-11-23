@@ -20,8 +20,8 @@ export function Contact() {
           style={{ lineHeight: 0.95 }}
         >
           LET’S BUILD{" "}
-          <span className="font-pixel text-[1.1em] font-normal">YOUR</span>{" "}
-          YOUR NEXT SYSTEM
+          <span className="font-pixel text-[1.1em] font-normal">YOUR NEXT</span>{" "}
+          PRODUCT
         </h2>
       </Reveal>
       <Reveal delay={100}>
