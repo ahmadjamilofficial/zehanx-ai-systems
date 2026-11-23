@@ -9,6 +9,7 @@ import {
 const NAV_LINKS = [
   { label: "ABOUT", href: "#about" },
   { label: "IDEA STUDIO", href: "#idea-studio" },
+  { label: "INSIGHTS", href: "/insights" },
   { label: "SERVICES", href: "#services" },
   { label: "PROCESS", href: "#process" },
   { label: "WORK", href: "#work" },
