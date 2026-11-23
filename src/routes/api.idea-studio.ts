@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { z } from "zod";
-import { runIdeaStudio } from "@/lib/ai/rewind";
+import { IdeaStudioProviderError, runIdeaStudio } from "@/lib/ai/rewind";
 import { sendGmailMessages } from "@/lib/email/gmail";
 
 const Body = z.object({
@@ -133,6 +133,28 @@ export const Route = createFileRoute("/api/idea-studio")({
           return Response.json(await runIdeaStudio(body.messages));
         } catch (error) {
           if (error instanceof z.ZodError) return Response.json({ error: "Invalid request format." }, { status: 400 });
+          if (error instanceof IdeaStudioProviderError) {
+            console.error("Idea Studio provider error:", error.message);
+            if (error.message.includes("REWIND_API_KEY is not configured")) {
+              return Response.json(
+                { error: "Idea Studio is not configured yet. The site administrator must add REWIND_API_KEY to the Vercel Production environment and redeploy." },
+                { status: 503 },
+              );
+            }
+            if (error.status === 429) {
+              return Response.json({ error: "Idea Studio has reached its AI provider limit. Please try again later." }, { status: 429 });
+            }
+            if (error.status === 401 || error.status === 403) {
+              return Response.json(
+                { error: "Idea Studio's AI credentials were rejected. The site administrator must verify REWIND_API_KEY in Vercel." },
+                { status: 503 },
+              );
+            }
+            return Response.json(
+              { error: "The AI provider is temporarily unavailable. Please try again shortly or book a call." },
+              { status: error.status && error.status >= 500 ? 502 : 503 },
+            );
+          }
           console.error("Idea Studio failed:", error instanceof Error ? error.message : "Unknown error");
           return Response.json({ error: "Idea Studio is temporarily unavailable. Please try again or book a call." }, { status: 503 });
         }
