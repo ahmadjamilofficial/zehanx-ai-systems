@@ -34,9 +34,7 @@ export function Services() {
               <span className="font-pixel text-sm text-muted-foreground transition-colors group-hover:text-accent">
                 {service.num}
               </span>
-              <h3 className="text-xl font-semibold tracking-wide md:text-2xl">
-                {service.title}
-              </h3>
+              <h3 className="text-xl font-semibold tracking-wide md:text-2xl"><a href={`/services/${service.slug}`} className="transition-colors hover:text-accent">{service.title}</a></h3>
               <p className="text-sm leading-relaxed text-muted-foreground">
                 {service.desc}
               </p>
