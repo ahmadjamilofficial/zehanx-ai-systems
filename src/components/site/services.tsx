@@ -35,9 +35,12 @@ export function Services() {
                 {service.num}
               </span>
               <h3 className="text-xl font-semibold tracking-wide md:text-2xl"><a href={`/services/${service.slug}`} className="transition-colors hover:text-accent">{service.title}</a></h3>
-              <p className="text-sm leading-relaxed text-muted-foreground">
-                {service.desc}
-              </p>
+              <div>
+                <p className="text-sm leading-relaxed text-muted-foreground">{service.desc}</p>
+                <ul className="mt-3 space-y-1 text-xs leading-relaxed text-muted-foreground">
+                  {service.bullets.map((item) => <li key={item}>— {item}</li>)}
+                </ul>
+              </div>
             </div>
           </Reveal>
         ))}
