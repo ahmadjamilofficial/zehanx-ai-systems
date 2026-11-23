@@ -29,7 +29,8 @@ export function IdeaStudio() {
   const [manualBudget, setManualBudget] = useState("Not specified");
   const [manualDeadline, setManualDeadline] = useState("Exploring");
   const [manualOwner, setManualOwner] = useState("");
-  const speechRef = useRef<SpeechRecognitionLike | null>(null);\n  const lineBreak = String.fromCharCode(10);
+  const speechRef = useRef<SpeechRecognitionLike | null>(null);
+  const lineBreak = String.fromCharCode(10);
   const emailBody = encodeURIComponent([
     "Hello ZehanX Tech,",
     "",
