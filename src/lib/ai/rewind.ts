@@ -16,6 +16,13 @@ const TurnSchema = z.object({
 });
 export type StudioMessage = { role: "user" | "assistant"; content: string };
 
+export class IdeaStudioProviderError extends Error {
+  constructor(message: string, readonly status?: number) {
+    super(message);
+    this.name = "IdeaStudioProviderError";
+  }
+}
+
 let dailyCount = 0;
 let dailyDate = new Date().toISOString().slice(0, 10);
 function consumeDailyAllowance() {
@@ -60,7 +67,7 @@ Brief fields: projectType (website | business-system | custom-software | ai-ml |
 export async function runIdeaStudio(messages: StudioMessage[]) {
   consumeDailyAllowance();
   const key = process.env.REWIND_API_KEY;
-  if (!key) throw new Error("REWIND_API_KEY is not configured");
+  if (!key) throw new IdeaStudioProviderError("REWIND_API_KEY is not configured");
   const base = (process.env.REWIND_BASE_URL || "https://api.rewind.ai").replace(/\/+$/, "");
   const model = process.env.REWIND_MODEL || "qwen/qwen3.5-9b";
   const history = messages.slice(-16).map((message) => ({ role: message.role, content: message.content.slice(0, 1600) }));
@@ -76,7 +83,13 @@ export async function runIdeaStudio(messages: StudioMessage[]) {
       }),
       signal: AbortSignal.timeout(25000),
     });
-    if (!response.ok) throw new Error(`Rewind request failed: ${response.status}`);
+    if (!response.ok) {
+      const providerDetail = (await response.text()).slice(0, 500);
+      throw new IdeaStudioProviderError(
+        `Rewind request failed (${response.status}): ${providerDetail || response.statusText}`,
+        response.status,
+      );
+    }
     const data = await response.json() as { choices?: Array<{ message?: { content?: string } }> };
     const content = data.choices?.[0]?.message?.content;
     if (!content) throw new Error("Rewind returned an empty response");
