@@ -185,9 +185,9 @@ export function Hero() {
           </div>
           <div className="text-left">
             <h2 className="text-lg leading-tight tracking-wide md:text-xl">
-              MACHINE LEARNING
+              SOFTWARE &amp; SYSTEMS
               <br />
-              <span className="font-pixel text-2xl md:text-3xl">&amp; DATA</span>
+              <span className="font-pixel text-2xl md:text-3xl">BUILT SMARTER</span>
             </h2>
           </div>
           <div>
@@ -223,7 +223,7 @@ export function Hero() {
               SOFTWARE, SYSTEMS
               <br />
               <span className="inline-block font-pixel text-[1.25em] font-normal leading-none">
-                DATA
+                &amp; WEBSITES
               </span>
               <br />
               ENGINEERED WITH
