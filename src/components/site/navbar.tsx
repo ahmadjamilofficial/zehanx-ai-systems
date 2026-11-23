@@ -8,7 +8,7 @@ import {
 
 const NAV_LINKS = [
   { label: "ABOUT", href: "#about" },
-  { label: "IDEA STUDIO", href: "#idea-studio" },
+  { label: "IDEA STUDIO", href: "/idea-studio" },
   { label: "INSIGHTS", href: "/insights" },
   { label: "PRICING", href: "/pricing" },
   { label: "SERVICES", href: "#services" },
@@ -86,7 +86,7 @@ export function Navbar() {
       >
         <div className="flex items-center justify-between px-5 py-5 sm:px-6 md:px-10 lg:px-14">
           <a
-            href="#top"
+            href="/"
             aria-label="ZehanX Tech home"
             className="text-foreground transition-opacity hover:opacity-70"
           >
@@ -127,7 +127,7 @@ export function Navbar() {
       >
         <div className="flex items-center justify-between px-5 py-5 sm:px-6">
           <a
-            href="#top"
+            href="/"
             onClick={() => setOpen(false)}
             aria-label="ZehanX Tech home"
             className="text-foreground"
