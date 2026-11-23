@@ -1,27 +1,29 @@
-# Idea Studio deployment checklist
+# Idea Studio deployment
 
-The Idea Studio uses Rewind as its only LLM provider. The API key is read server-side and must never be prefixed with VITE_ or NEXT_PUBLIC_.
+## Required Vercel Production environment variables
 
-## Vercel environment variables
+- `REWIND_API_KEY` — Rewind API key for the AI discovery chat.
+- `GMAIL_USER=zehanxtech@gmail.com` — the Gmail mailbox used as the sender.
+- `GMAIL_APP_PASSWORD` — a Google App Password generated while signed in to `zehanxtech@gmail.com`.
+- `LEADS_TO_EMAIL=zehanxtech@gmail.com` — destination for new project enquiries.
 
-Set these in the Production environment:
-- REWIND_API_KEY (the owner says this is already configured)
-- REWIND_BASE_URL=https://api.rewind.ai
-- REWIND_MODEL=qwen/qwen3.5-9b
-- SUPABASE_URL
-- SUPABASE_SERVICE_ROLE_KEY
+The email transport uses Gmail SMTP over TLS on port 465. The team notification is sent from the ZehanX mailbox, with the visitor's email in Reply-To. A visitor receipt is sent after the team notification; receipt failure does not undo successful team delivery.
 
-Optional email delivery:
-- RESEND_API_KEY
-- LEADS_TO_EMAIL
-- LEADS_FROM_EMAIL
+## Configure Gmail
 
-## Database
+1. Sign in to the Google account `zehanxtech@gmail.com`.
+2. Enable 2-Step Verification for that account.
+3. Open https://myaccount.google.com/apppasswords and create an App Password for this website.
+4. In Vercel, open the ZehanX project → Settings → Environment Variables.
+5. Add `GMAIL_USER`, `GMAIL_APP_PASSWORD`, and `LEADS_TO_EMAIL` for Production (and Preview if you want preview deployments to send email).
+6. Redeploy after saving the variables.
 
-Apply `supabase/migrations/202611230001_idea_studio_leads.sql` to the Supabase project. The table has RLS enabled and no public policies. The server inserts with the service-role key; never expose that key to the browser.
+Do not paste the App Password into chat, source code, GitHub files, or commits. Store it only as the Vercel environment variable. If Google does not offer App Passwords, check that 2-Step Verification is enabled and that the account's security policy allows them.
 
-## Important operational limits
+## Optional lead persistence
 
-The API includes request validation, a short conversation-history cap, a Rewind timeout, one JSON repair attempt and an in-process IP rate limit. The in-memory rate limit and daily request ceiling are best-effort only; they are not distributed controls and reset across serverless instances/cold starts. Add a shared rate limiter and provider spend controls before high-traffic launch.
+Apply `supabase/migrations/202611230001_idea_studio_leads.sql`, then set `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY`. Database persistence is best-effort: email delivery is the primary submission channel and is not blocked by a database failure.
 
-Email delivery is optional and currently notifies the configured team address. Verify sender-domain authentication and test deliverability before enabling it.
+## Verify delivery
+
+After configuring the Vercel variables and redeploying, submit a real test enquiry through `/idea-studio`. Confirm the team notification arrives at `zehanxtech@gmail.com`, reply to the visitor using Reply-To, and confirm the visitor receipt. Repository tests and preview builds cannot verify Gmail account authentication or real-world inbox delivery.

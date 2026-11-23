@@ -30,3 +30,8 @@ cd <repository-name>
 npm i
 npm run dev
 ```
+
+
+## Idea Studio email setup
+
+Idea Studio sends lead notifications through Gmail SMTP. Follow [`docs/idea-studio-setup.md`](docs/idea-studio-setup.md) to configure the `zehanxtech@gmail.com` mailbox and its App Password in Vercel. Never commit the App Password.

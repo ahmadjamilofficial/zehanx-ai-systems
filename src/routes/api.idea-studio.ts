@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { z } from "zod";
 import { runIdeaStudio } from "@/lib/ai/rewind";
+import { sendGmailMessages } from "@/lib/email/gmail";
 
 const Body = z.object({
   action: z.enum(["chat", "submit"]).default("chat"),
@@ -18,35 +19,119 @@ function rateLimit(ip: string) {
   if (item.count >= 8) return false;
   item.count += 1; return true;
 }
-async function saveLead(body: z.infer<typeof Body>) {
-  if (!body.consent || !body.name || !body.email || !body.brief) return Response.json({ error: "Name, email, brief and consent are required." }, { status: 400 });
-  const url = process.env.SUPABASE_URL, key = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  if (!url || !key) return Response.json({ error: "Lead storage is not configured. Please book a call or contact us directly." }, { status: 503 });
-  const row = { name: body.name, email: body.email, whatsapp: body.whatsapp || null, brief: body.brief, transcript: body.messages || [], consent: true };
-  const saved = await fetch(`${url.replace(/\/+$/, "")}/rest/v1/idea_studio_leads`, { method: "POST", headers: { apikey: key, Authorization: `Bearer ${key}`, "Content-Type": "application/json", Prefer: "return=minimal" }, body: JSON.stringify(row), signal: AbortSignal.timeout(10000) });
-  if (!saved.ok) { console.error("Idea Studio database insert failed:", saved.status); return Response.json({ error: "We couldn't save your brief. Please book a call instead." }, { status: 502 }); }
-  const mailKey = process.env.RESEND_API_KEY, to = process.env.LEADS_TO_EMAIL, from = process.env.LEADS_FROM_EMAIL;
-  if (mailKey && to && from) {
-    const mail = await fetch("https://api.resend.com/emails", { method: "POST", headers: { Authorization: `Bearer ${mailKey}`, "Content-Type": "application/json" }, body: JSON.stringify({ from, to: [to], subject: `New ZehanX project enquiry: ${body.name}`, text: `Name: ${body.name}\nEmail: ${body.email}\nWhatsApp: ${body.whatsapp || "Not supplied"}\n\nBrief:\n${JSON.stringify(body.brief, null, 2)}` }), signal: AbortSignal.timeout(10000) });
-    if (!mail.ok) console.error("Idea Studio notification email failed:", mail.status);
-    const visitorCopy = await fetch("https://api.resend.com/emails", { method: "POST", headers: { Authorization: `Bearer ${mailKey}`, "Content-Type": "application/json" }, body: JSON.stringify({ from, to: [body.email], subject: "Your ZehanX project brief", text: `Hi ${body.name},\n\nThanks for sharing your idea with ZehanX Tech. Your AI-prepared draft is preliminary; our team will review the scope and confirm the quote within 24 working hours.\n\n${JSON.stringify(body.brief, null, 2)}\n\nBook a call: https://cal.com/zehanx-technologies-official` }), signal: AbortSignal.timeout(10000) });
-    if (!visitorCopy.ok) console.error("Idea Studio visitor confirmation failed:", visitorCopy.status);
+
+async function sendLeadEmail(body: z.infer<typeof Body>) {
+  if (!body.consent || !body.name || !body.email || !body.brief) {
+    return Response.json({ error: "Name, email, brief and consent are required." }, { status: 400 });
   }
-  return Response.json({ saved: true });
-}
-export const Route = createFileRoute("/api/idea-studio")({
-  server: { handlers: { POST: async ({ request }) => {
-    const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
-    if (!rateLimit(ip)) return Response.json({ error: "Please wait a minute before trying again." }, { status: 429 });
+
+  const user = process.env.GMAIL_USER?.trim();
+  const password = process.env.GMAIL_APP_PASSWORD;
+  const to = process.env.LEADS_TO_EMAIL?.trim();
+  if (!user || !password || !to || user.toLowerCase() !== "zehanxtech@gmail.com" || to.toLowerCase() !== "zehanxtech@gmail.com") {
+    console.error("Idea Studio Gmail delivery is not configured for the ZehanX mailbox.");
+    return Response.json(
+      { error: "Email delivery is not configured yet. Please contact us directly or book a call." },
+      { status: 503 },
+    );
+  }
+
+  const transcript = (body.messages || [])
+    .map((message) => `${message.role.toUpperCase()}: ${message.content}`)
+    .join("\n\n");
+  const briefText = JSON.stringify(body.brief, null, 2);
+  try {
+    await sendGmailMessages([{
+      to,
+      replyTo: body.email,
+      subject: `New ZehanX project enquiry: ${body.name}`,
+      text: [
+        "NEW ZEHANX TECH PROJECT ENQUIRY",
+        "",
+        `Name: ${body.name}`,
+        `Email: ${body.email}`,
+        `WhatsApp: ${body.whatsapp || "Not supplied"}`,
+        "",
+        "AI-PREPARED PROJECT BRIEF",
+        briefText,
+        "",
+        "DISCOVERY CONVERSATION",
+        transcript || "No transcript supplied.",
+      ].join("\n"),
+    }]);
+  } catch (error) {
+    console.error("Idea Studio team notification failed:", error instanceof Error ? error.message : "Unknown error");
+    return Response.json(
+      { error: "We couldn't email your project brief. Please try again or contact us directly." },
+      { status: 502 },
+    );
+  }
+
+  // Email is the primary delivery channel. Database persistence is best-effort,
+  // so missing Supabase configuration cannot silently block the enquiry email.
+  let saved = false;
+  const url = process.env.SUPABASE_URL;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (url && key) {
     try {
-      const body = Body.parse(await request.json());
-      if (body.action === "submit") return await saveLead(body);
-      if (!body.messages?.length) return Response.json({ error: "Conversation is required." }, { status: 400 });
-      return Response.json(await runIdeaStudio(body.messages));
+      const response = await fetch(`${url.replace(/\/+$/, "")}/rest/v1/idea_studio_leads`, {
+        method: "POST",
+        headers: {
+          apikey: key,
+          Authorization: `Bearer ${key}`,
+          "Content-Type": "application/json",
+          Prefer: "return=minimal",
+        },
+        body: JSON.stringify({
+          name: body.name,
+          email: body.email,
+          whatsapp: body.whatsapp || null,
+          brief: body.brief,
+          transcript: body.messages || [],
+          consent: true,
+        }),
+        signal: AbortSignal.timeout(10000),
+      });
+      saved = response.ok;
+      if (!response.ok) console.error("Idea Studio database insert failed:", response.status);
     } catch (error) {
-      if (error instanceof z.ZodError) return Response.json({ error: "Invalid request format." }, { status: 400 });
-      console.error("Idea Studio failed:", error instanceof Error ? error.message : "Unknown error");
-      return Response.json({ error: "Idea Studio is temporarily unavailable. Please book a call or contact us." }, { status: 503 });
+      console.error("Idea Studio database insert failed:", error instanceof Error ? error.message : "Unknown error");
     }
-  } } },
+  } else {
+    console.warn("Idea Studio email sent, but Supabase lead storage is not configured.");
+  }
+
+  // A visitor receipt is useful, but it must never undo successful team delivery.
+  try {
+    await sendGmailMessages([{
+      to: body.email,
+      subject: "We received your ZehanX project brief",
+      text: `Hi ${body.name},\n\nThanks for sharing your project with ZehanX Tech. We have received your brief and will review it. The AI-generated plan is preliminary; scope, pricing and delivery are confirmed after a human review.\n\n${briefText}\n\nBook a call: https://cal.com/zehanx-technologies-official`,
+    }]);
+  } catch (error) {
+    console.error("Idea Studio visitor confirmation failed:", error instanceof Error ? error.message : "Unknown error");
+  }
+
+  return Response.json({ emailed: true, saved });
+}
+
+export const Route = createFileRoute("/api/idea-studio")({
+  server: {
+    handlers: {
+      POST: async ({ request }) => {
+        const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+        if (!rateLimit(ip)) return Response.json({ error: "Please wait a minute before trying again." }, { status: 429 });
+        try {
+          const body = Body.parse(await request.json());
+          if (body.action === "submit") return await sendLeadEmail(body);
+          if (!body.messages?.length) return Response.json({ error: "Conversation is required." }, { status: 400 });
+          return Response.json(await runIdeaStudio(body.messages));
+        } catch (error) {
+          if (error instanceof z.ZodError) return Response.json({ error: "Invalid request format." }, { status: 400 });
+          console.error("Idea Studio failed:", error instanceof Error ? error.message : "Unknown error");
+          return Response.json({ error: "Idea Studio is temporarily unavailable. Please try again or book a call." }, { status: 503 });
+        }
+      },
+    },
+  },
 });
