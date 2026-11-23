@@ -29,7 +29,18 @@ export function IdeaStudio() {
   const [manualBudget, setManualBudget] = useState("Not specified");
   const [manualDeadline, setManualDeadline] = useState("Exploring");
   const [manualOwner, setManualOwner] = useState("");
-  const speechRef = useRef<SpeechRecognitionLike | null>(null);\n  const emailBody = encodeURIComponent([\n    "Hello ZehanX Tech,",\n    "",\n    "I would like to discuss a project.",\n    name ? `Name: ${name}` : "",\n    email ? `Reply email: ${email}` : "",\n    whatsapp ? `WhatsApp: ${whatsapp}` : "",\n    brief ? `Project brief:\\n${JSON.stringify(brief, null, 2)}` : "",\n    messages.length > 1 ? `Conversation:\\n${messages.map((m) => `${m.role}: ${m.content}`).join("\\n\\n")}` : "",\n  ].filter(Boolean).join("\\n"));\n  const emailHref = `mailto:${EMAIL}?subject=${encodeURIComponent("Project enquiry — ZehanX Tech")}&body=${emailBody}`;
+  const speechRef = useRef<SpeechRecognitionLike | null>(null);\n  const lineBreak = String.fromCharCode(10);
+  const emailBody = encodeURIComponent([
+    "Hello ZehanX Tech,",
+    "",
+    "I would like to discuss a project.",
+    name ? `Name: ${name}` : "",
+    email ? `Reply email: ${email}` : "",
+    whatsapp ? `WhatsApp: ${whatsapp}` : "",
+    brief ? `Project brief:${lineBreak}${JSON.stringify(brief, null, 2)}` : "",
+    messages.length > 1 ? `Conversation:${lineBreak}${messages.map((m) => `${m.role}: ${m.content}`).join(lineBreak + lineBreak)}` : "",
+  ].filter(Boolean).join(lineBreak));
+  const emailHref = `mailto:${EMAIL}?subject=${encodeURIComponent("Project enquiry — ZehanX Tech")}&body=${emailBody}`;
   async function send(e: FormEvent) {
     e.preventDefault(); const value = input.trim();
     if (!value || busy || brief) return;
