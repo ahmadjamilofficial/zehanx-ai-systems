@@ -38,7 +38,7 @@ export function IdeaStudio() {
     email ? `Reply email: ${email}` : "",
     whatsapp ? `WhatsApp: ${whatsapp}` : "",
     brief ? `Project brief:${lineBreak}${JSON.stringify(brief, null, 2)}` : "",
-    messages.length > 1 ? `Conversation:${lineBreak}${messages.map((m) => `${m.role}: ${m.content}`).join(lineBreak + lineBreak)}` : "",
+    messages.length > 1 ? `Conversation:${lineBreak}${messages.slice(-8).map((m) => `${m.role}: ${m.content.slice(0, 500)}`).join(lineBreak + lineBreak)}` : "",
   ].filter(Boolean).join(lineBreak));
   const emailHref = `mailto:${EMAIL}?subject=${encodeURIComponent("Project enquiry — ZehanX Tech")}&body=${emailBody}`;
   async function send(e: FormEvent) {
