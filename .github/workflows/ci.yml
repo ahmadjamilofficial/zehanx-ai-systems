@@ -12,6 +12,7 @@ jobs:
         with:
           bun-version: latest
       - run: bun install --frozen-lockfile
+      - run: bunx prettier --write 'src/**/*.ts' 'src/**/*.tsx'
       - run: bun run lint
       - run: bun run test
       - run: bun run build
