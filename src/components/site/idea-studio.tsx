@@ -4,7 +4,10 @@ import { CAL_URL, WHATSAPP_URL } from "@/lib/site";
 import { Reveal } from "./reveal";
 
 type Message = { role: "user" | "assistant"; content: string };
-type Brief = { projectType: string; summary: string; features: string[]; risks: string[]; urgency: string; budgetBand: string; dataReadiness: string };\ntype SpeechResult = { results: ArrayLike<ArrayLike<{ transcript: string }>> };\ntype SpeechRecognitionLike = { lang: string; onresult: ((event: SpeechResult) => void) | null; onerror: (() => void) | null; start: () => void };\ntype SpeechRecognitionCtor = new () => SpeechRecognitionLike;
+type Brief = { projectType: string; summary: string; features: string[]; risks: string[]; urgency: string; budgetBand: string; dataReadiness: string };
+type SpeechResult = { results: ArrayLike<ArrayLike<{ transcript: string }>> };
+type SpeechRecognitionLike = { lang: string; onresult: ((event: SpeechResult) => void) | null; onerror: (() => void) | null; start: () => void };
+type SpeechRecognitionCtor = new () => SpeechRecognitionLike;
 const greeting: Message = { role: "assistant", content: "Tell me what you want to build or improve. I’ll ask a few focused questions about your users, current process, data, budget and timeline, then prepare a project brief." };
 
 export function IdeaStudio() {
@@ -17,7 +20,16 @@ export function IdeaStudio() {
   const [email, setEmail] = useState("");
   const [whatsapp, setWhatsapp] = useState("");
   const [consent, setConsent] = useState(false);
-  const [saved, setSaved] = useState(false);\n  const [manual, setManual] = useState(false);\n  const [manualGoal, setManualGoal] = useState("");\n  const [manualUsers, setManualUsers] = useState("");\n  const [manualProcess, setManualProcess] = useState("");\n  const [manualData, setManualData] = useState("");\n  const [manualBudget, setManualBudget] = useState("Not specified");\n  const [manualDeadline, setManualDeadline] = useState("Exploring");\n  const [manualOwner, setManualOwner] = useState("");\n  const speechRef = useRef<SpeechRecognitionLike | null>(null);
+  const [saved, setSaved] = useState(false);
+  const [manual, setManual] = useState(false);
+  const [manualGoal, setManualGoal] = useState("");
+  const [manualUsers, setManualUsers] = useState("");
+  const [manualProcess, setManualProcess] = useState("");
+  const [manualData, setManualData] = useState("");
+  const [manualBudget, setManualBudget] = useState("Not specified");
+  const [manualDeadline, setManualDeadline] = useState("Exploring");
+  const [manualOwner, setManualOwner] = useState("");
+  const speechRef = useRef<SpeechRecognitionLike | null>(null);
   async function send(e: FormEvent) {
     e.preventDefault(); const value = input.trim();
     if (!value || busy || brief) return;
@@ -29,7 +41,24 @@ export function IdeaStudio() {
       setMessages([...next, { role: "assistant", content: data.reply }]); if (data.complete && data.brief) setBrief(data.brief);
     } catch (err) { setError(err instanceof Error ? err.message : "Idea Studio is unavailable."); setManual(true); } finally { setBusy(false); }
   }
-  function startVoiceInput() {\n    const browser = window as Window & { SpeechRecognition?: SpeechRecognitionCtor; webkitSpeechRecognition?: SpeechRecognitionCtor };\n    const Speech = browser.SpeechRecognition || browser.webkitSpeechRecognition;\n    if (!Speech) { setError("Voice input is not supported in this browser. You can type your idea instead."); return; }\n    const recognition = new Speech();\n    recognition.lang = navigator.language || "en-US";\n    recognition.onresult = (event) => setInput((current) => `${current}${current ? " " : ""}${event.results[0][0].transcript}`);\n    recognition.onerror = () => setError("Voice input stopped. Please try again or type your idea.");\n    speechRef.current = recognition;\n    recognition.start();\n  }\n  function useManualBrief(e: FormEvent) {\n    e.preventDefault();\n    setBrief({ projectType: "other", summary: `Goal: ${manualGoal}. Users: ${manualUsers}. Current process: ${manualProcess}. Decision-maker: ${manualOwner || "Not specified"}.`, features: [], risks: ["Technical feasibility and integrations require a scoping review."], urgency: manualDeadline, budgetBand: manualBudget, dataReadiness: manualData || "Not yet assessed; confirm available data during scoping." });\n    setMessages([...messages, { role: "user", content: `Manual project brief: ${manualGoal}` }]);\n    setManual(false);\n  }\n  async function submitLead(e: FormEvent) {
+  function startVoiceInput() {
+    const browser = window as Window & { SpeechRecognition?: SpeechRecognitionCtor; webkitSpeechRecognition?: SpeechRecognitionCtor };
+    const Speech = browser.SpeechRecognition || browser.webkitSpeechRecognition;
+    if (!Speech) { setError("Voice input is not supported in this browser. You can type your idea instead."); return; }
+    const recognition = new Speech();
+    recognition.lang = navigator.language || "en-US";
+    recognition.onresult = (event) => setInput((current) => `${current}${current ? " " : ""}${event.results[0][0].transcript}`);
+    recognition.onerror = () => setError("Voice input stopped. Please try again or type your idea.");
+    speechRef.current = recognition;
+    recognition.start();
+  }
+  function useManualBrief(e: FormEvent) {
+    e.preventDefault();
+    setBrief({ projectType: "other", summary: `Goal: ${manualGoal}. Users: ${manualUsers}. Current process: ${manualProcess}. Decision-maker: ${manualOwner || "Not specified"}.`, features: [], risks: ["Technical feasibility and integrations require a scoping review."], urgency: manualDeadline, budgetBand: manualBudget, dataReadiness: manualData || "Not yet assessed; confirm available data during scoping." });
+    setMessages([...messages, { role: "user", content: `Manual project brief: ${manualGoal}` }]);
+    setManual(false);
+  }
+  async function submitLead(e: FormEvent) {
     e.preventDefault(); if (!brief || !consent || busy) return; setBusy(true); setError("");
     try {
       const response = await fetch("/api/idea-studio", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ action: "submit", messages, brief, name, email, whatsapp, consent }) });
@@ -48,6 +77,18 @@ export function IdeaStudio() {
         {!saved?<form onSubmit={submitLead} className="mt-5 space-y-3"><input required minLength={2} maxLength={100} value={name} onChange={e=>setName(e.target.value)} placeholder="Your name" className="w-full border border-line bg-background px-3 py-3 text-sm"/><input required type="email" value={email} onChange={e=>setEmail(e.target.value)} placeholder="Email address" className="w-full border border-line bg-background px-3 py-3 text-sm"/><input value={whatsapp} onChange={e=>setWhatsapp(e.target.value)} placeholder="WhatsApp (optional)" className="w-full border border-line bg-background px-3 py-3 text-sm"/><label className="flex gap-2 text-xs text-muted-foreground"><input type="checkbox" checked={consent} onChange={e=>setConsent(e.target.checked)} required/>I agree to the <a href="/privacy" className="text-accent underline">Privacy Policy</a> and consent to this enquiry being sent to ZehanX Tech.</label><button disabled={busy||!consent} className="w-full bg-primary px-4 py-3 text-sm font-semibold text-primary-foreground disabled:opacity-40">Send my project brief</button></form>:<p className="mt-5 text-sm text-accent">Your brief has been submitted.</p>}
         <div className="mt-4 flex flex-wrap gap-3 text-sm"><a href={CAL_URL} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-accent">Book a call <ArrowUpRight size={14}/></a><a href={WHATSAPP_URL} target="_blank" rel="noreferrer" className="text-muted-foreground underline">WhatsApp</a></div>
       </div>:<div className="border border-line p-5"><p className="font-pixel text-xs tracking-widest text-muted-foreground">WHAT WE’LL CLARIFY</p><ul className="mt-4 space-y-3 text-sm text-muted-foreground">{["The outcome you want","Who will use the product","Your current process and tools","Data and integrations available","Budget range and target deadline","Who approves the project"].map(x=><li key={x} className="border-b border-line pb-3">{x}</li>)}</ul><p className="mt-4 text-xs text-muted-foreground">Please do not share passwords, payment details or sensitive personal information.</p></div>}</div>
-    </div>{error&&<p role="alert" className="mt-4 text-sm text-accent">{error}</p>}</Reveal>
+    </div>
+      {manual && !brief && <form onSubmit={useManualBrief} className="mt-6 grid gap-3 border border-line p-5 md:grid-cols-2">
+        <p className="font-pixel text-xs tracking-widest text-accent md:col-span-2">MANUAL PROJECT BRIEF / AI FALLBACK</p>
+        <label className="text-xs text-muted-foreground">What do you want to achieve?<textarea required value={manualGoal} onChange={e=>setManualGoal(e.target.value)} className="mt-2 w-full border border-line bg-background p-3 text-sm" rows={3}/></label>
+        <label className="text-xs text-muted-foreground">Who will use it?<input required value={manualUsers} onChange={e=>setManualUsers(e.target.value)} className="mt-2 w-full border border-line bg-background p-3 text-sm"/></label>
+        <label className="text-xs text-muted-foreground">Current process and tools<textarea value={manualProcess} onChange={e=>setManualProcess(e.target.value)} className="mt-2 w-full border border-line bg-background p-3 text-sm" rows={3}/></label>
+        <label className="text-xs text-muted-foreground">Available data and integrations<textarea value={manualData} onChange={e=>setManualData(e.target.value)} className="mt-2 w-full border border-line bg-background p-3 text-sm" rows={3}/></label>
+        <label className="text-xs text-muted-foreground">Budget band<select value={manualBudget} onChange={e=>setManualBudget(e.target.value)} className="mt-2 w-full border border-line bg-background p-3 text-sm"><option>Not specified</option><option>Under 1k (currency to confirm)</option><option>1k–5k (currency to confirm)</option><option>5k–15k (currency to confirm)</option><option>15k+ (currency to confirm)</option></select></label>
+        <label className="text-xs text-muted-foreground">Target deadline<select value={manualDeadline} onChange={e=>setManualDeadline(e.target.value)} className="mt-2 w-full border border-line bg-background p-3 text-sm"><option>Exploring</option><option>Within 1 month</option><option>1–3 months</option><option>3+ months</option><option>Urgent</option></select></label>
+        <label className="text-xs text-muted-foreground md:col-span-2">Who approves the project?<input value={manualOwner} onChange={e=>setManualOwner(e.target.value)} className="mt-2 w-full border border-line bg-background p-3 text-sm"/></label>
+        <button className="bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground md:col-span-2">Prepare my project brief</button>
+      </form>}
+      {error&&<p role="alert" className="mt-4 text-sm text-accent">{error}</p>}</Reveal>
   </section>;
 }
