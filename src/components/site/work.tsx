@@ -76,14 +76,14 @@ export function Work() {
 }
 
 const INDUSTRIES = [
-  { name: "FINANCE & BANKING", note: "Operational portals, reconciliation workflows, reporting and risk analytics" },
-  { name: "HEALTHCARE", note: "Patient-facing websites, secure workflow tools and document automation" },
-  { name: "RETAIL & E-COMMERCE", note: "E-commerce websites, inventory systems, recommendations and pricing workflows" },
-  { name: "MANUFACTURING", note: "Operations dashboards, production workflows and predictive maintenance" },
-  { name: "LOGISTICS & SUPPLY CHAIN", note: "Dispatch systems, fleet dashboards, integrations and demand forecasting" },
+  { slug: "finance", name: "FINANCE & BANKING", note: "Operational portals, reconciliation workflows, reporting and risk analytics" },
+  { slug: "healthcare", name: "HEALTHCARE", note: "Patient-facing websites, secure workflow tools and document automation" },
+  { slug: "retail", name: "RETAIL & E-COMMERCE", note: "E-commerce websites, inventory systems, recommendations and pricing workflows" },
+  { slug: "manufacturing", name: "MANUFACTURING", note: "Operations dashboards, production workflows and predictive maintenance" },
+  { slug: "logistics", name: "LOGISTICS & SUPPLY CHAIN", note: "Dispatch systems, fleet dashboards, integrations and demand forecasting" },
   { name: "TELECOM", note: "Customer portals, provisioning workflows, analytics and churn prediction" },
   { name: "ENERGY & UTILITIES", note: "Asset monitoring, field-service systems and predictive maintenance" },
-  { name: "EDUCATION", note: "Learning platforms, assessment workflows and content tools" },
+  { slug: "education", name: "EDUCATION", note: "Learning platforms, assessment workflows and content tools" },
 ];
 
 export function Industries() {
@@ -106,7 +106,7 @@ export function Industries() {
           <Reveal key={industry.name} delay={i * 50} className="bg-background">
             <div className="group flex h-full flex-col p-6 transition-colors hover:bg-card md:p-8">
               <h3 className="text-sm font-semibold tracking-wider transition-colors group-hover:text-accent">
-                {industry.name}
+                {industry.slug ? <a href={`/industries/${industry.slug}`}>{industry.name}</a> : industry.name}
               </h3>
               <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
                 {industry.note}
