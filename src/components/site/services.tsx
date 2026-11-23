@@ -1,11 +1,11 @@
 import { Reveal } from "./reveal";
 
 const SERVICES = [
-  { num: "01", title: "CUSTOM SOFTWARE & WEB APPS", desc: "Purpose-built web applications, portals and platforms designed around your workflows, users and business requirements." },
-  { num: "02", title: "BUSINESS SYSTEMS & AUTOMATION", desc: "ERP and CRM integrations, operational dashboards, internal tools and workflow automation that reduce repetitive work." },
-  { num: "03", title: "WEBSITES & E-COMMERCE", desc: "Fast, responsive business websites and commerce experiences built to communicate clearly and convert visitors." },
-  { num: "04", title: "AI & ML SYSTEMS", desc: "Production-focused machine learning, LLM applications, intelligent agents, evaluation and model integrations." },
-  { num: "05", title: "DATA ENGINEERING & DATASETS", desc: "Reliable data pipelines, cleaning, annotation, quality controls and training-ready datasets for analytics and AI." },
+  { num: "01", slug: "custom-software", title: "CUSTOM SOFTWARE & WEB APPS", desc: "Purpose-built web applications, portals and platforms designed around your workflows, users and business requirements." },
+  { num: "02", slug: "business-systems", title: "BUSINESS SYSTEMS & AUTOMATION", desc: "ERP and CRM integrations, operational dashboards, internal tools and workflow automation that reduce repetitive work." },
+  { num: "03", slug: "websites", title: "WEBSITES & E-COMMERCE", desc: "Fast, responsive business websites and commerce experiences built to communicate clearly and convert visitors." },
+  { num: "04", slug: "ai-ml", title: "AI & ML SYSTEMS", desc: "Production-focused machine learning, LLM applications, intelligent agents, evaluation and model integrations." },
+  { num: "05", slug: "data-engineering", title: "DATA ENGINEERING & DATASETS", desc: "Reliable data pipelines, cleaning, annotation, quality controls and training-ready datasets for analytics and AI." },
   { num: "06", title: "THE ZEHANX ML PLATFORM", desc: "Our platform for data ingestion, model workflows, experiment tracking, evaluation and deployment." },
 ];
 
