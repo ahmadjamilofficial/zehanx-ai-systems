@@ -1,12 +1,12 @@
 import { Reveal } from "./reveal";
 
 const SERVICES = [
-  { num: "01", slug: "custom-software", title: "CUSTOM SOFTWARE & WEB APPS", desc: "Purpose-built web applications, portals and platforms designed around your workflows, users and business requirements." },
-  { num: "02", slug: "business-systems", title: "BUSINESS SYSTEMS & AUTOMATION", desc: "ERP and CRM integrations, operational dashboards, internal tools and workflow automation that reduce repetitive work." },
-  { num: "03", slug: "websites", title: "WEBSITES & E-COMMERCE", desc: "Fast, responsive business websites and commerce experiences built to communicate clearly and convert visitors." },
-  { num: "04", slug: "ai-ml", title: "AI & ML SYSTEMS", desc: "Production-focused machine learning, LLM applications, intelligent agents, evaluation and model integrations." },
-  { num: "05", slug: "data-engineering", title: "DATA ENGINEERING & DATASETS", desc: "Reliable data pipelines, cleaning, annotation, quality controls and training-ready datasets for analytics and AI." },
-  { num: "06", title: "THE ZEHANX ML PLATFORM", desc: "Our platform for data ingestion, model workflows, experiment tracking, evaluation and deployment." },
+  { num: "01", slug: "custom-software", title: "CUSTOM SOFTWARE & WEB APPS", desc: "Purpose-built applications and platforms designed around your workflows and users.", bullets: ["Web apps, portals and customer platforms", "Frontend, backend and API integrations", "Testing, deployment and handover"] },
+  { num: "02", slug: "business-systems", title: "BUSINESS SYSTEMS & AUTOMATION", desc: "Connected operations tools that reduce repetitive work and improve visibility.", bullets: ["ERP/CRM integrations and dashboards", "Internal tools and approval workflows", "WhatsApp and process automation"] },
+  { num: "03", slug: "websites", title: "WEBSITES & E-COMMERCE", desc: "Responsive digital experiences built for clarity, speed and conversion.", bullets: ["Business websites and landing pages", "Online stores and payment integrations", "CMS, analytics and technical SEO"] },
+  { num: "04", slug: "ai-ml", title: "AI & ML SYSTEMS", desc: "Production-focused AI capabilities integrated into real products and workflows.", bullets: ["LLM applications and intelligent agents", "Machine learning and model evaluation", "Deployment, monitoring and integration"] },
+  { num: "05", slug: "data-engineering", title: "DATA ENGINEERING & DATASETS", desc: "Reliable data foundations for analytics, applications and machine learning.", bullets: ["Data pipelines and transformations", "Cleaning, annotation and quality controls", "Training-ready datasets and documentation"] },
+  { num: "06", slug: "zehanx-ml-platform", title: "THE ZEHANX ML PLATFORM", desc: "A platform direction for managing model and data workflows.", bullets: ["Data ingestion and model workflows", "Experiment tracking and evaluation", "Deployment workflow foundations"] },
 ];
 
 export function Services() {
@@ -24,7 +24,7 @@ export function Services() {
           WHAT WE <span className="font-pixel text-[1.15em]">BUILD</span>
         </h2>
         <p className="mt-5 max-w-xl text-sm leading-relaxed text-muted-foreground md:text-base">
-          Four integrated capabilities — data infrastructure, model development, applied AI systems, and our internal ML platform — working together to deliver measurable business outcomes.
+          From complete software products and websites to business automation and production AI, we take projects from discovery through deployment.
         </p>
       </Reveal>
       <div className="mt-12">
@@ -51,22 +51,22 @@ const STEPS = [
   {
     num: "01",
     title: "DISCOVER",
-    desc: "We map your operations, data and constraints, and define what intelligence would actually change.",
+    desc: "We map your goals, users, current process, data and constraints before proposing a solution.",
   },
   {
     num: "02",
     title: "ARCHITECT",
-    desc: "We design the system: data flow, model approach, agent topology, integration points and deployment path.",
+    desc: "We design the product architecture, user experience, integrations, milestones and deployment path.",
   },
   {
     num: "03",
     title: "BUILD & TRAIN",
-    desc: "We build the software, train and fine-tune the models on your data, and iterate against real metrics.",
+    desc: "We build in agreed milestones, with one accountable lead and async recorded progress updates.",
   },
   {
     num: "04",
     title: "DEPLOY & SCALE",
-    desc: "We ship to production, monitor performance and keep improving as your data and usage grow.",
+    desc: "We deploy, document and hand over the system. Quotes are fixed after scoping; payment follows an agreed deposit and milestones.",
   },
 ];
 
