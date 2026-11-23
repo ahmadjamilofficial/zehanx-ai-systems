@@ -22,6 +22,6 @@ Apply `supabase/migrations/202611230001_idea_studio_leads.sql` to the Supabase p
 
 ## Important operational limits
 
-The API includes request validation, a short conversation-history cap, a Rewind timeout, one JSON repair attempt and an in-process IP rate limit. The in-memory rate limit is best-effort only and is not a distributed limiter or a durable daily spend cap on serverless infrastructure. Add a shared rate limiter and provider spend controls before high-traffic launch.
+The API includes request validation, a short conversation-history cap, a Rewind timeout, one JSON repair attempt and an in-process IP rate limit. The in-memory rate limit and daily request ceiling are best-effort only; they are not distributed controls and reset across serverless instances/cold starts. Add a shared rate limiter and provider spend controls before high-traffic launch.
 
 Email delivery is optional and currently notifies the configured team address. Verify sender-domain authentication and test deliverability before enabling it.
