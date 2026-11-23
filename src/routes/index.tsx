@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { Navbar } from "@/components/site/navbar";
 import { Hero } from "@/components/site/hero";
-import { IdeaStudio } from "@/components/site/idea-studio";
 import { ExitPrompt } from "@/components/site/exit-prompt";
 import { About, Marquee } from "@/components/site/about";
 import { Process, Services } from "@/components/site/services";
@@ -158,7 +157,6 @@ function Index() {
       <Navbar />
       <main>
         <Hero />
-        <IdeaStudio />
         <Marquee />
         <About />
         <Services />
