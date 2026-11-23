@@ -243,19 +243,20 @@ export function Hero() {
                 <ArrowUpRight size={14} />
                 <span className="text-sm tracking-wider">BOOK A CALL</span>
               </a>
+              <a href="#idea-studio" className="flex items-center gap-3 self-start border border-line px-6 py-3 text-sm tracking-wider text-foreground/90 transition-colors hover:bg-foreground/10 lg:self-end">DESCRIBE YOUR IDEA</a>
               <div className="flex flex-wrap items-stretch gap-2 text-sm text-foreground/80 sm:gap-3">
                 <span className="flex items-center bg-card px-3 py-2 sm:px-4">
                   <span className="font-pixel text-xs tracking-tight sm:text-sm">
-                    DATA INFRASTRUCTURE
+                    CUSTOM SOFTWARE
                   </span>
                 </span>
                 <span className="flex items-center gap-2 bg-card px-3 py-2 sm:px-4">
                   <span className="text-base font-bold sm:text-lg">ML</span>
-                  <span className="text-xs text-muted-foreground">DEVELOPMENT</span>
+                  <span className="text-xs text-muted-foreground">SYSTEMS</span>
                 </span>
                 <span className="flex items-center bg-card px-3 py-2 sm:px-4">
                   <span className="text-[10px] font-bold tracking-tight sm:text-xs">
-                    APPLIED AI SYSTEMS
+                    AI &amp; DATA
                   </span>
                 </span>
               </div>
