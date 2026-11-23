@@ -7,15 +7,15 @@ import {
 } from "@/lib/sounds";
 
 const NAV_LINKS = [
-  { label: "ABOUT", href: "#about" },
+  { label: "ABOUT", href: "/about" },
   { label: "IDEA STUDIO", href: "/idea-studio" },
   { label: "INSIGHTS", href: "/insights" },
   { label: "PRICING", href: "/pricing" },
-  { label: "SERVICES", href: "#services" },
-  { label: "PROCESS", href: "#process" },
-  { label: "WORK", href: "#work" },
-  { label: "INDUSTRIES", href: "#industries" },
-  { label: "TALK", href: "#contact" },
+  { label: "SERVICES", href: "/services/custom-software" },
+  { label: "PROCESS", href: "/#process" },
+  { label: "WORK", href: "/work" },
+  { label: "INDUSTRIES", href: "/industries/finance" },
+  { label: "TALK", href: "/contact" },
 ];
 
 export function Logo({ size = 28 }: { size?: number }) {
