@@ -140,9 +140,9 @@ export function IdeaStudio() {
   }
 
   return (
-    <main className="min-h-[calc(100svh-64px)] bg-[#212121] text-[#ececec]">
-      <div className="mx-auto flex min-h-[calc(100svh-64px)] w-full max-w-4xl flex-col px-3 sm:px-6">
-        <header className="sticky top-16 z-20 flex items-center justify-between border-b border-white/10 bg-[#212121]/95 py-3 backdrop-blur sm:py-4">
+    <main className="min-h-[100svh] bg-[#212121] text-[#ececec]">
+      <div className="mx-auto flex min-h-[100svh] w-full max-w-4xl flex-col px-3 sm:px-6">
+        <header className="sticky top-0 z-20 flex items-center justify-between border-b border-white/10 bg-[#212121]/95 py-3 backdrop-blur sm:py-4">
           <div className="flex min-w-0 items-center gap-3">
             <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/10"><Sparkles size={17} /></div>
             <div className="min-w-0"><h1 className="truncate text-sm font-semibold">ZehanX Project Assistant</h1><p className="text-xs text-white/45">Project discovery · AI assistant</p></div>
