@@ -126,13 +126,9 @@ export function Footer() {
           &copy; {year} ZehanX Tech. All rights reserved.
         </p>
         <div className="flex items-center gap-6 text-xs text-muted-foreground">
-          <a href="#about" className="transition-opacity hover:opacity-70">
-            About
-          </a>
-          <a href="#services" className="transition-opacity hover:opacity-70">
-            Services
-          </a>
-          <a href="/pricing" className="transition-opacity hover:opacity-70">Pricing</a>
+          <a href="/about" className="transition-opacity hover:opacity-70">About</a>
+          <a href="#services" className="transition-opacity hover:opacity-70">Services</a>
+          <a href="/work" className="transition-opacity hover:opacity-70">Work</a>\n          <a href="/contact" className="transition-opacity hover:opacity-70">Contact</a>\n          <a href="/pricing" className="transition-opacity hover:opacity-70">Pricing</a>
           <a href="/insights" className="transition-opacity hover:opacity-70">Insights</a>
           <a href="/privacy" className="transition-opacity hover:opacity-70">Privacy</a>
           <a href="/terms" className="transition-opacity hover:opacity-70">Terms</a>
