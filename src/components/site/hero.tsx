@@ -243,7 +243,7 @@ export function Hero() {
                 <ArrowUpRight size={14} />
                 <span className="text-sm tracking-wider">BOOK A CALL</span>
               </a>
-              <a href="#idea-studio" className="flex items-center gap-3 self-start border border-line px-6 py-3 text-sm tracking-wider text-foreground/90 transition-colors hover:bg-foreground/10 lg:self-end">DESCRIBE YOUR IDEA</a>
+              <a href="/idea-studio" className="flex items-center gap-3 self-start border border-accent bg-accent px-6 py-3 text-sm font-semibold tracking-wider text-accent-foreground transition-colors hover:bg-accent/90 lg:self-end"><ArrowUpRight size={14} /> PLAN YOUR PROJECT WITH AI</a>
               <div className="flex flex-wrap items-stretch gap-2 text-sm text-foreground/80 sm:gap-3">
                 <span className="flex items-center bg-card px-3 py-2 sm:px-4">
                   <span className="font-pixel text-xs tracking-tight sm:text-sm">
