@@ -132,6 +132,11 @@ export function Footer() {
           <a href="#services" className="transition-opacity hover:opacity-70">
             Services
           </a>
+          <a href="/pricing" className="transition-opacity hover:opacity-70">Pricing</a>
+          <a href="/insights" className="transition-opacity hover:opacity-70">Insights</a>
+          <a href="/privacy" className="transition-opacity hover:opacity-70">Privacy</a>
+          <a href="/terms" className="transition-opacity hover:opacity-70">Terms</a>
+          <a href="/security" className="transition-opacity hover:opacity-70">Security</a>
           <a
             href={`mailto:${EMAIL}`}
             className="transition-opacity hover:opacity-70"
