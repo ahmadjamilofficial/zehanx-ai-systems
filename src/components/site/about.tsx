@@ -34,10 +34,10 @@ export function Marquee() {
   );
 }
 
-const PROOF_POINTS = [
-  "Production-deployed systems",
-  "Measurable business outcomes",
-  "End-to-end ML expertise",
+const CAPABILITIES = [
+  "Software built around your workflows",
+  "From idea to production",
+  "AI as an engineering advantage",
 ];
 
 export function About() {
@@ -58,8 +58,8 @@ export function About() {
               className="mt-6 text-3xl font-medium uppercase tracking-wide md:text-5xl"
               style={{ lineHeight: 1.02 }}
             >
-              A FULL-STACK ML SOLUTIONS PROVIDER FOR ENTERPRISES THAT NEED
-              INTELLIGENCE IN PRODUCTION
+              SOFTWARE, SYSTEMS AND WEBSITES BUILT AROUND
+              THE WAY YOUR BUSINESS WORKS
             </h2>
           </Reveal>
           <Reveal delay={120}>
@@ -77,7 +77,7 @@ export function About() {
           </Reveal>
           <Reveal delay={200}>
             <div className="mt-10 flex flex-wrap gap-3">
-              {PROOF_POINTS.map((point) => (
+              {CAPABILITIES.map((point) => (
                 <span
                   key={point}
                   className="border border-line px-4 py-3 font-pixel text-xs text-foreground/80"
