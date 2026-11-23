@@ -1,26 +1,12 @@
 import { Reveal } from "./reveal";
 
 const SERVICES = [
-  {
-    num: "01",
-    title: "ML DATA SOLUTIONS",
-    desc: "Dataset engineering, data cleaning, annotation, synthetic data generation, and training-data pipelines that turn raw data into model-ready assets.",
-  },
-  {
-    num: "02",
-    title: "MODEL DEVELOPMENT & EVALUATION",
-    desc: "Classical ML, deep learning, computer vision, NLP, model fine-tuning, benchmarking, and performance optimization — building models that meet production standards.",
-  },
-  {
-    num: "03",
-    title: "APPLIED AI SYSTEMS",
-    desc: "Build, integrate, deploy, and maintain production AI systems that solve specific operational problems inside your existing infrastructure.",
-  },
-  {
-    num: "04",
-    title: "ZEHANX ML PLATFORM",
-    desc: "Our visual environment for data ingestion, model selection, experiment tracking, training, evaluation, and deployment — the platform that powers our delivery.",
-  },
+  { num: "01", title: "CUSTOM SOFTWARE & WEB APPS", desc: "Purpose-built web applications, portals and platforms designed around your workflows, users and business requirements." },
+  { num: "02", title: "BUSINESS SYSTEMS & AUTOMATION", desc: "ERP and CRM integrations, operational dashboards, internal tools and workflow automation that reduce repetitive work." },
+  { num: "03", title: "WEBSITES & E-COMMERCE", desc: "Fast, responsive business websites and commerce experiences built to communicate clearly and convert visitors." },
+  { num: "04", title: "AI & ML SYSTEMS", desc: "Production-focused machine learning, LLM applications, intelligent agents, evaluation and model integrations." },
+  { num: "05", title: "DATA ENGINEERING & DATASETS", desc: "Reliable data pipelines, cleaning, annotation, quality controls and training-ready datasets for analytics and AI." },
+  { num: "06", title: "THE ZEHANX ML PLATFORM", desc: "Our platform for data ingestion, model workflows, experiment tracking, evaluation and deployment." },
 ];
 
 export function Services() {
@@ -35,7 +21,7 @@ export function Services() {
           02 / Services
         </p>
         <h2 id="services-heading" className="mt-6 text-3xl font-medium uppercase tracking-wide md:text-5xl">
-          OUR <span className="font-pixel text-[1.15em]">PILLARS</span>
+          WHAT WE <span className="font-pixel text-[1.15em]">BUILD</span>
         </h2>
         <p className="mt-5 max-w-xl text-sm leading-relaxed text-muted-foreground md:text-base">
           Four integrated capabilities — data infrastructure, model development, applied AI systems, and our internal ML platform — working together to deliver measurable business outcomes.
