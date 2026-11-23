@@ -14,9 +14,7 @@ function encodeBody(value: string) {
 export async function sendGmailMessages(messages: Mail[]) {
   const user = process.env.GMAIL_USER?.trim();
   const password = process.env.GMAIL_APP_PASSWORD?.replace(/\s/g, "");
-  if (!user || !password || !messages.length) {
-    throw new Error("Gmail SMTP is not configured.");
-  }
+  if (!user || !password || !messages.length) throw new Error("Gmail SMTP is not configured.");
   if (user.toLowerCase() !== "zehanxtech@gmail.com") {
     throw new Error("GMAIL_USER must be zehanxtech@gmail.com.");
   }
@@ -25,26 +23,31 @@ export async function sendGmailMessages(messages: Mail[]) {
   socket.setTimeout(15000);
   let buffer = "";
   const waiters: Array<{ resolve: (value: string) => void; reject: (error: Error) => void }> = [];
-
-  socket.on("data", (chunk: Buffer | string) => {
-    buffer += chunk.toString();
+  const drain = () => {
     const waiter = waiters[0];
     if (!waiter) return;
     const lines = buffer.split("\r\n");
     const end = lines.findIndex((line) => /^\d{3} /.test(line));
-    if (end >= 0) {
-      const reply = lines.slice(0, end + 1).join("\n");
-      buffer = lines.slice(end + 1).join("\r\n");
-      waiters.shift();
-      waiter.resolve(reply);
-    }
+    if (end < 0) return;
+    const reply = lines.slice(0, end + 1).join("\n");
+    buffer = lines.slice(end + 1).join("\r\n");
+    waiters.shift();
+    waiter.resolve(reply);
+  };
+
+  socket.on("data", (chunk: Buffer | string) => {
+    buffer += chunk.toString();
+    drain();
   });
   socket.on("timeout", () => socket.destroy(new Error("Gmail SMTP timed out.")));
   socket.on("error", (error) => {
     while (waiters.length) waiters.shift()?.reject(error);
   });
 
-  const readReply = () => new Promise<string>((resolve, reject) => waiters.push({ resolve, reject }));
+  const readReply = () => new Promise<string>((resolve, reject) => {
+    waiters.push({ resolve, reject });
+    drain();
+  });
   const expect = async (code: number) => {
     const reply = await readReply();
     if (!reply.split("\n").at(-1)?.startsWith(String(code))) {
