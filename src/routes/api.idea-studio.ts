@@ -29,6 +29,8 @@ async function saveLead(body: z.infer<typeof Body>) {
   if (mailKey && to && from) {
     const mail = await fetch("https://api.resend.com/emails", { method: "POST", headers: { Authorization: `Bearer ${mailKey}`, "Content-Type": "application/json" }, body: JSON.stringify({ from, to: [to], subject: `New ZehanX project enquiry: ${body.name}`, text: `Name: ${body.name}\nEmail: ${body.email}\nWhatsApp: ${body.whatsapp || "Not supplied"}\n\nBrief:\n${JSON.stringify(body.brief, null, 2)}` }), signal: AbortSignal.timeout(10000) });
     if (!mail.ok) console.error("Idea Studio notification email failed:", mail.status);
+    const visitorCopy = await fetch("https://api.resend.com/emails", { method: "POST", headers: { Authorization: `Bearer ${mailKey}`, "Content-Type": "application/json" }, body: JSON.stringify({ from, to: [body.email], subject: "Your ZehanX project brief", text: `Hi ${body.name},\n\nThanks for sharing your idea with ZehanX Tech. Your AI-prepared draft is preliminary; our team will review the scope and confirm the quote within 24 working hours.\n\n${JSON.stringify(body.brief, null, 2)}\n\nBook a call: https://cal.com/zehanx-technologies-official` }), signal: AbortSignal.timeout(10000) });
+    if (!visitorCopy.ok) console.error("Idea Studio visitor confirmation failed:", visitorCopy.status);
   }
   return Response.json({ saved: true });
 }
