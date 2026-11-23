@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type FormEvent, type KeyboardEvent } from "react";
-import { ArrowUp, Check, LoaderCircle, Paperclip, RotateCcw, Sparkles } from "lucide-react";
+import { ArrowUp, Check, RotateCcw, Sparkles } from "lucide-react";
 
 type Message = { role: "user" | "assistant"; content: string };
 type Brief = {
