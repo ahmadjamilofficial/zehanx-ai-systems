@@ -6,7 +6,7 @@ export function ExitPrompt() {
   useEffect(() => {
     if (sessionStorage.getItem("zehanx-exit-prompt-shown")) return;
     let lastY = window.scrollY;
-    const timer: ReturnType<typeof setTimeout> = window.setTimeout(show, 60000);
+    const timer: ReturnType<typeof setTimeout> = window.setTimeout(() => show(), 60000);
     const show = () => {
       if (sessionStorage.getItem("zehanx-exit-prompt-shown")) return;
       sessionStorage.setItem("zehanx-exit-prompt-shown", "1");
