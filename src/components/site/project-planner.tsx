@@ -64,7 +64,7 @@ const FEATURES = [
 ];
 
 const TIMELINES = ["As soon as possible", "Within 1 month", "1–3 months", "3–6 months", "Flexible / exploring"];
-const BUDGETS = ["Under $2,500", "$2,500–$5,000", "$5,000–$15,000", "$15,000–$50,000", "$50,000+", "Not sure — advise me"];
+const BUDGETS = ["Under $750", "Under $1500", "Under $2,500", "$2,500–$5,000", "$5,000–$15,000", "$15,000–$50,000", "$50,000+", "Not sure — advise me"];
 
 function ChoiceCard({ selected, title, description, onClick }: { selected: boolean; title: string; description?: string; onClick: () => void }) {
   return (
