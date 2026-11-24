@@ -108,22 +108,29 @@ export function Navbar() {
             <SoundToggle />
             <button
               type="button"
-              onClick={() => setOpen(true)}
-              aria-label="Open menu"
-              className="p-2 text-foreground transition-opacity hover:opacity-70 md:hidden"
+              onClick={() => setOpen((current) => !current)}
+              aria-label={open ? "Close menu" : "Open menu"}
+              aria-expanded={open}
+              aria-controls="zehanx-mobile-navigation"
+              className="inline-flex min-h-11 min-w-11 items-center justify-center border border-line bg-background/80 p-2 text-foreground shadow-sm transition-colors hover:border-foreground/40 hover:bg-background md:hidden"
             >
-              <Menu size={24} />
+              {open ? <X size={22} /> : <Menu size={22} />}
             </button>
           </div>
         </div>
       </header>
 
       <div
-        className={`fixed inset-0 z-50 flex flex-col bg-background/95 backdrop-blur-md transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-          open ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
+        id="zehanx-mobile-navigation"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Mobile navigation"
+        aria-hidden={!open}
+        className={`fixed inset-0 z-[60] flex min-h-[100dvh] flex-col overflow-y-auto bg-background/98 pb-[env(safe-area-inset-bottom)] backdrop-blur-xl transition-[opacity,visibility] duration-300 ${
+          open ? "visible pointer-events-auto opacity-100" : "invisible pointer-events-none opacity-0"
         }`}
       >
-        <div className="flex items-center justify-between px-5 py-5 sm:px-6">
+        <div className="flex shrink-0 items-center justify-between border-b border-line px-5 py-4 sm:px-6">
           <a
             href="/"
             onClick={() => setOpen(false)}
@@ -136,32 +143,35 @@ export function Navbar() {
             type="button"
             onClick={() => setOpen(false)}
             aria-label="Close menu"
-            className="p-2 text-foreground transition-opacity hover:opacity-70"
+            className="inline-flex min-h-11 min-w-11 items-center justify-center border border-line p-2 text-foreground transition-colors hover:border-foreground/40"
           >
-            <X size={24} />
+            <X size={22} />
           </button>
         </div>
         <nav
-          className="flex flex-1 flex-col items-center justify-center gap-8"
+          className="flex flex-1 flex-col items-center justify-center gap-5 px-6 py-8 sm:gap-7"
           aria-label="Mobile"
         >
           {NAV_LINKS.map((link, i) => (
             <a
               key={link.href}
               href={link.href}
+              tabIndex={open ? 0 : -1}
               onClick={() => setOpen(false)}
-              className={`text-2xl tracking-widest text-foreground transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-                open ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
+              className={`text-xl tracking-[0.16em] text-foreground transition-all duration-300 sm:text-2xl sm:tracking-widest ${
+                open ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"
               }`}
-              style={{ transitionDelay: open ? `${100 + i * 60}ms` : "0ms" }}
+              style={{ transitionDelay: open ? `${80 + i * 45}ms` : "0ms" }}
             >
               {link.label}
             </a>
           ))}
         </nav>
-        <div className="flex flex-col items-center gap-4 pb-10">
+        <div className="flex shrink-0 flex-col items-center gap-3 border-t border-line px-5 py-5">
           <SoundToggle />
-          <div className="text-xs text-muted-foreground">zehanxtech@gmail.com</div>
+          <a href="mailto:zehanxtech@gmail.com" className="break-all text-center text-xs text-muted-foreground">
+            zehanxtech@gmail.com
+          </a>
         </div>
       </div>
     </>
