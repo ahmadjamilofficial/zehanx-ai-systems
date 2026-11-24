@@ -1,6 +1,5 @@
 import { useState, type FormEvent } from "react";
 import { ArrowLeft, ArrowRight, Check, CheckCircle2 } from "lucide-react";
-import { Logo } from "@/components/site/navbar";
 import { EMAIL } from "@/lib/site";
 
 type ProjectDetails = {
@@ -69,11 +68,11 @@ const BUDGETS = ["Under $750", "Under $1500", "Under $2,500", "$2,500–$5,000",
 
 function ChoiceCard({ selected, title, description, onClick }: { selected: boolean; title: string; description?: string; onClick: () => void }) {
   return (
-    <button type="button" onClick={onClick} aria-pressed={selected} className={`group flex w-full items-start gap-4 border p-4 text-left transition-colors sm:p-5 ${selected ? "border-accent bg-accent/10" : "border-line bg-card hover:border-foreground/30"}`}>
-      <span className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center border ${selected ? "border-accent bg-accent text-white" : "border-foreground/30"}`}>{selected && <Check size={13} />}</span>
+    <button type="button" onClick={onClick} aria-pressed={selected} className={`group flex w-full items-start gap-2.5 border p-2.5 text-left transition-colors sm:gap-4 sm:p-5 ${selected ? "border-accent bg-accent/10" : "border-line bg-card hover:border-foreground/30"}`}>
+      <span className={`mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center border sm:h-5 sm:w-5 ${selected ? "border-accent bg-accent text-white" : "border-foreground/30"}`}>{selected && <Check size={13} />}</span>
       <span className="min-w-0">
-        <span className="block text-sm font-medium">{title}</span>
-        {description && <span className="mt-1 block text-xs leading-relaxed text-muted-foreground">{description}</span>}
+        <span className="block text-xs font-medium sm:text-sm">{title}</span>
+        {description && <span className="mt-1 block text-[10px] leading-snug text-muted-foreground sm:text-xs sm:leading-relaxed">{description}</span>}
       </span>
     </button>
   );
@@ -131,15 +130,10 @@ export function ProjectPlanner() {
   };
 
   return (
-    <div className="h-full min-h-0 bg-background text-foreground">
-      <main className="mx-auto h-full min-h-0 w-full max-w-6xl overflow-y-auto overscroll-y-contain px-5 pb-8 pt-28 sm:px-8 md:px-12 lg:px-16">
-        <div className="mb-10 flex items-center justify-between gap-4">
-          <a href="/" aria-label="ZehanX Tech home" className="inline-flex items-center gap-3 text-foreground transition-opacity hover:opacity-70"><Logo size={26} /><span className="font-pixel text-xs tracking-[0.2em] text-muted-foreground">ZEHANX TECH</span></a>
-          <span className="font-pixel text-[10px] tracking-widest text-muted-foreground">PROJECT ENQUIRY / 2026</span>
-        </div>
-
+    <div className="h-full min-h-0 overflow-hidden bg-background text-foreground">
+      <main className="mx-auto h-full min-h-0 w-full max-w-6xl overflow-y-auto overscroll-y-contain px-3 py-3 sm:px-8 sm:py-6 md:px-12 lg:px-16">
         {submitted ? (
-          <section className="my-auto grid min-h-[65vh] place-items-center py-12 text-center">
+          <section className="grid min-h-full place-items-center py-5 text-center sm:py-12">
             <div className="max-w-2xl">
               <div className="mx-auto flex h-16 w-16 items-center justify-center border border-accent/50 bg-accent/10 text-accent"><CheckCircle2 size={30} /></div>
               <p className="mt-8 font-pixel text-xs tracking-[0.22em] text-accent">SUBMISSION RECEIVED</p>
@@ -151,11 +145,11 @@ export function ProjectPlanner() {
           </section>
         ) : (
           <>
-            <div className="grid flex-1 grid-cols-1 gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
-              <aside className="lg:sticky lg:top-28 lg:self-start">
-                <p className="font-pixel text-xs uppercase tracking-[0.2em] text-accent">LET'S PLAN SOMETHING</p>
-                <h1 className="mt-5 max-w-xl text-4xl font-medium uppercase leading-[0.98] tracking-wide sm:text-5xl xl:text-6xl">A GOOD BUILD<br />STARTS WITH<br /><span className="font-pixel text-[1.08em] font-normal">A CLEAR PLAN.</span></h1>
-                <p className="mt-6 max-w-md text-sm leading-7 text-muted-foreground">A few focused questions help us understand what you need, who it's for and what success looks like. It takes about 3–5 minutes.</p>
+            <div className="grid grid-cols-1 gap-4 sm:gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
+              <aside className="lg:sticky lg:top-6 lg:self-start">
+                <p className="font-pixel text-[9px] uppercase tracking-[0.16em] text-accent sm:text-xs sm:tracking-[0.2em]">LET'S PLAN SOMETHING</p>
+                <h1 className="mt-2 max-w-xl text-2xl font-medium uppercase leading-[0.98] tracking-wide sm:mt-5 sm:text-5xl xl:text-6xl">A GOOD BUILD<br />STARTS WITH<br /><span className="font-pixel text-[1.08em] font-normal">A CLEAR PLAN.</span></h1>
+                <p className="mt-2 max-w-md text-xs leading-5 text-muted-foreground sm:mt-6 sm:text-sm sm:leading-7">A few focused questions help us understand what you need, who it's for and what success looks like. It takes about 3–5 minutes.</p>
                 <div className="mt-10 hidden space-y-4 lg:block">
                   {STEPS.map((item, index) => (
                     <div key={item.label} className="flex items-center gap-3">
@@ -166,33 +160,33 @@ export function ProjectPlanner() {
                 </div>
               </aside>
 
-              <section className="min-w-0 border border-line bg-card/40 p-5 sm:p-8 md:p-10" aria-live="polite">
-                <div className="mb-8">
+              <section className="min-w-0 border border-line bg-card/40 p-3 sm:p-8 md:p-10" aria-live="polite">
+                <div className="mb-4 sm:mb-8">
                   <div className="flex items-center justify-between gap-3">
                     <span className="font-pixel text-[10px] tracking-[0.18em] text-accent">STEP {String(step + 1).padStart(2, "0")} / {String(STEPS.length).padStart(2, "0")}</span>
                     <span className="text-xs tabular-nums text-muted-foreground">{Math.round(((step + 1) / STEPS.length) * 100)}% complete</span>
                   </div>
                   <div className="mt-3 h-1 w-full bg-foreground/10"><div className="h-1 bg-accent transition-all duration-500" style={{ width: `${((step + 1) / STEPS.length) * 100}%` }} /></div>
-                  <p className="mt-8 font-pixel text-[10px] tracking-[0.18em] text-muted-foreground">{STEPS[step].label}</p>
-                  <h2 className="mt-3 text-2xl font-medium uppercase tracking-wide sm:text-3xl">{STEPS[step].title}</h2>
-                  <p className="mt-3 text-sm leading-6 text-muted-foreground">{STEPS[step].note}</p>
+                  <p className="mt-4 font-pixel text-[9px] tracking-[0.14em] text-muted-foreground sm:mt-8 sm:text-[10px] sm:tracking-[0.18em]">{STEPS[step].label}</p>
+                  <h2 className="mt-2 text-xl font-medium uppercase tracking-wide sm:mt-3 sm:text-3xl">{STEPS[step].title}</h2>
+                  <p className="mt-2 text-xs leading-5 text-muted-foreground sm:mt-3 sm:text-sm sm:leading-6">{STEPS[step].note}</p>
                 </div>
 
-                <form onSubmit={step === STEPS.length - 1 ? submit : (event) => { event.preventDefault(); if (canContinue()) setStep((current) => Math.min(current + 1, STEPS.length - 1)); }} className="space-y-3">
+                <form onSubmit={step === STEPS.length - 1 ? submit : (event) => { event.preventDefault(); if (canContinue()) setStep((current) => Math.min(current + 1, STEPS.length - 1)); }} className="space-y-2 sm:space-y-3">
                   {step === 0 && (
                     <>
                       <div className="grid gap-3 sm:grid-cols-2">
                         {PROJECT_TYPES.map(([title, description]) => <ChoiceCard key={title} selected={details.projectType === title} title={title} description={description} onClick={() => update("projectType", title)} />)}
                       </div>
                       <label className="block pt-4 text-xs text-muted-foreground" htmlFor="project-name">Project name (optional)</label>
-                      <input id="project-name" value={details.projectName} onChange={(event) => update("projectName", event.target.value)} maxLength={120} placeholder="e.g. Customer operations platform" className="w-full border border-line bg-background px-4 py-3 text-sm outline-none transition focus:border-foreground/40" />
+                      <input id="project-name" value={details.projectName} onChange={(event) => update("projectName", event.target.value)} maxLength={120} placeholder="e.g. Customer operations platform" className="w-full border border-line bg-background px-3 py-2.5 text-xs outline-none transition focus:border-foreground/40 sm:px-4 sm:py-3 sm:text-sm" />
                     </>
                   )}
 
                   {step === 1 && (
                     <label className="block">
                       <span className="sr-only">Describe the project outcome</span>
-                      <textarea autoFocus required minLength={15} maxLength={1800} rows={7} value={details.outcome} onChange={(event) => update("outcome", event.target.value)} placeholder="What are you trying to achieve? What problem should this solve? What would a successful result look like?" className="w-full resize-y border border-line bg-background px-4 py-4 text-sm leading-7 outline-none transition placeholder:text-muted-foreground/60 focus:border-foreground/40" />
+                      <textarea autoFocus required minLength={15} maxLength={1800} rows={7} value={details.outcome} onChange={(event) => update("outcome", event.target.value)} placeholder="What are you trying to achieve? What problem should this solve? What would a successful result look like?" className="w-full resize-y border border-line bg-background px-3 py-3 text-xs leading-5 outline-none transition placeholder:text-muted-foreground/60 focus:border-foreground/40 sm:px-4 sm:py-4 sm:text-sm sm:leading-7" />
                       <span className="mt-2 block text-right text-[11px] text-muted-foreground">{details.outcome.length}/1800</span>
                     </label>
                   )}
@@ -212,7 +206,7 @@ export function ProjectPlanner() {
                   {step === 4 && (
                     <label className="block">
                       <span className="mb-3 block text-xs text-muted-foreground">Existing software, APIs, databases, spreadsheets, tools or other context (optional)</span>
-                      <textarea rows={7} maxLength={1600} value={details.existingSystems} onChange={(event) => update("existingSystems", event.target.value)} placeholder="e.g. We currently use HubSpot, Google Sheets and Stripe. We have an existing website and a PostgreSQL database…" className="w-full resize-y border border-line bg-background px-4 py-4 text-sm leading-7 outline-none transition placeholder:text-muted-foreground/60 focus:border-foreground/40" />
+                      <textarea rows={7} maxLength={1600} value={details.existingSystems} onChange={(event) => update("existingSystems", event.target.value)} placeholder="e.g. We currently use HubSpot, Google Sheets and Stripe. We have an existing website and a PostgreSQL database…" className="w-full resize-y border border-line bg-background px-3 py-3 text-xs leading-5 outline-none transition placeholder:text-muted-foreground/60 focus:border-foreground/40 sm:px-4 sm:py-4 sm:text-sm sm:leading-7" />
                       <span className="mt-2 block text-right text-[11px] text-muted-foreground">{details.existingSystems.length}/1600</span>
                     </label>
                   )}
@@ -240,14 +234,14 @@ export function ProjectPlanner() {
                   )}
 
                   {error && <p role="alert" className="border border-red-500/30 bg-red-500/5 p-3 text-xs leading-5 text-red-300">{error}</p>}
-                  <div className="flex flex-col-reverse justify-between gap-3 border-t border-line pt-6 sm:flex-row sm:items-center">
+                  <div className="flex flex-col-reverse justify-between gap-2 border-t border-line pt-3 sm:flex-row sm:items-center sm:gap-3 sm:pt-6">
                     <button type="button" disabled={step === 0 || busy} onClick={() => { setError(""); setStep((current) => Math.max(current - 1, 0)); }} className="inline-flex items-center justify-center gap-2 px-4 py-3 text-xs tracking-widest text-muted-foreground transition-colors hover:text-foreground disabled:opacity-30"><ArrowLeft size={15} /> BACK</button>
-                    <button type="submit" disabled={!canContinue() || busy} className="inline-flex items-center justify-center gap-3 bg-primary px-6 py-4 text-xs font-semibold tracking-[0.16em] text-primary-foreground transition-opacity hover:opacity-85 disabled:cursor-not-allowed disabled:opacity-35">{busy ? "SENDING…" : step === STEPS.length - 1 ? "SEND PROJECT DETAILS" : "CONTINUE"} <ArrowRight size={15} /></button>
+                    <button type="submit" disabled={!canContinue() || busy} className="inline-flex items-center justify-center gap-2 bg-primary px-4 py-3 text-[10px] font-semibold tracking-[0.12em] text-primary-foreground transition-opacity hover:opacity-85 disabled:cursor-not-allowed disabled:opacity-35 sm:gap-3 sm:px-6 sm:py-4 sm:text-xs sm:tracking-[0.16em]">{busy ? "SENDING…" : step === STEPS.length - 1 ? "SEND PROJECT DETAILS" : "CONTINUE"} <ArrowRight size={15} /></button>
                   </div>
                 </form>
               </section>
             </div>
-            <p className="mt-12 border-t border-line pt-5 text-[10px] leading-5 text-muted-foreground">Your answers are used only to review and respond to this enquiry. Please do not include passwords, payment details or sensitive personal information.</p>
+            <p className="hidden">Your answers are used only to review and respond to this enquiry. Please do not include passwords, payment details or sensitive personal information.</p>
           </>
         )}
       </main>
