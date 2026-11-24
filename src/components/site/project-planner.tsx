@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from "react";
 import { ArrowLeft, ArrowRight, Check, CheckCircle2 } from "lucide-react";
+import { Logo } from "@/components/site/navbar";
 
 type ProjectDetails = {
   projectType: string;
@@ -132,7 +133,7 @@ export function ProjectPlanner() {
     <div className="min-h-screen bg-background text-foreground">
       <main className="mx-auto flex min-h-[calc(100svh-1px)] w-full max-w-6xl flex-col px-5 pb-12 pt-28 sm:px-8 md:px-12 lg:px-16">
         <div className="mb-10 flex items-center justify-between gap-4">
-          <a href="/" className="font-pixel text-xs tracking-[0.2em] text-muted-foreground transition-colors hover:text-foreground">← ZEHANX TECH</a>
+          <a href="/" aria-label="ZehanX Tech home" className="inline-flex items-center gap-3 text-foreground transition-opacity hover:opacity-70"><Logo size={26} /><span className="font-pixel text-xs tracking-[0.2em] text-muted-foreground">ZEHANX TECH</span></a>
           <span className="font-pixel text-[10px] tracking-widest text-muted-foreground">PROJECT ENQUIRY / 2026</span>
         </div>
 
