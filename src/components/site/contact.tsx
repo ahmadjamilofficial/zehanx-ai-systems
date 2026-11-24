@@ -30,6 +30,9 @@ export function Contact() {
 
         </p>
       </Reveal>
+      <Reveal delay={140}>
+        <a href="/plan-project" className="mt-8 inline-flex items-center gap-3 bg-primary px-6 py-3 text-xs font-semibold tracking-widest text-primary-foreground transition-opacity hover:opacity-85">PLAN YOUR PROJECT <ArrowUpRight size={15} /></a>
+      </Reveal>
 
       <div className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Reveal delay={80}>
