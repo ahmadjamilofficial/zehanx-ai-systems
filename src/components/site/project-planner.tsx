@@ -137,10 +137,10 @@ export function ProjectPlanner() {
             <div className="max-w-2xl">
               <div className="mx-auto flex h-16 w-16 items-center justify-center border border-accent/50 bg-accent/10 text-accent"><CheckCircle2 size={30} /></div>
               <p className="mt-8 font-pixel text-xs tracking-[0.22em] text-accent">SUBMISSION RECEIVED</p>
-              <h1 className="mt-5 text-4xl font-medium uppercase leading-[0.98] tracking-wide sm:text-5xl md:text-6xl">YOUR PROJECT<br /><span className="font-pixel text-[1.08em] font-normal">IS IN OUR HANDS.</span></h1>
-              <p className="mx-auto mt-7 max-w-xl text-sm leading-7 text-muted-foreground sm:text-base">Your project details have been sent to the ZehanX team. A confirmation has been sent to the email address you provided. We'll review your requirements and get back to you within <strong className="font-semibold text-foreground">24 business hours</strong>. For any follow-up, contact us at <a href={`mailto:${EMAIL}`} className="text-foreground underline underline-offset-4">{EMAIL}</a>.</p>
+              <h1 className="mt-3 text-2xl font-medium uppercase leading-[0.98] tracking-wide sm:mt-5 sm:text-5xl md:text-6xl">YOUR PROJECT<br /><span className="font-pixel text-[1.08em] font-normal">IS IN OUR HANDS.</span></h1>
+              <p className="mx-auto mt-4 max-w-xl text-xs leading-5 text-muted-foreground sm:mt-7 sm:text-base sm:leading-7">Your project details have been sent to the ZehanX team. A confirmation has been sent to the email address you provided. We'll review your requirements and get back to you within <strong className="font-semibold text-foreground">24 business hours</strong>. For any follow-up, contact us at <a href={`mailto:${EMAIL}`} className="text-foreground underline underline-offset-4">{EMAIL}</a>.</p>
               <p className="mt-3 text-xs text-muted-foreground">No automated pitch. A member of our team will review your brief.</p>
-              <a href="/" className="mt-9 inline-flex items-center gap-3 bg-primary px-6 py-3 text-xs font-semibold tracking-widest text-primary-foreground transition-opacity hover:opacity-85">BACK TO HOME <ArrowRight size={15} /></a>
+              <a href="/" className="mt-5 inline-flex items-center gap-2 bg-primary px-4 py-3 text-[10px] font-semibold tracking-widest text-primary-foreground transition-opacity hover:opacity-85 sm:mt-9 sm:gap-3 sm:px-6 sm:text-xs">BACK TO HOME <ArrowRight size={15} /></a>
             </div>
           </section>
         ) : (
@@ -241,7 +241,6 @@ export function ProjectPlanner() {
                 </form>
               </section>
             </div>
-            <p className="hidden">Your answers are used only to review and respond to this enquiry. Please do not include passwords, payment details or sensitive personal information.</p>
           </>
         )}
       </main>
