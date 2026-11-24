@@ -1,6 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Navbar } from "@/components/site/navbar";
-import { Footer } from "@/components/site/contact";
 import { ProjectPlanner } from "@/components/site/project-planner";
 
 export const Route = createFileRoute("/plan-project")({
@@ -19,10 +18,9 @@ export const Route = createFileRoute("/plan-project")({
 
 function PlanProjectPage() {
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="h-[100dvh] min-h-[100svh] overflow-hidden bg-background text-foreground">
       <Navbar />
       <ProjectPlanner />
-      <Footer />
     </div>
   );
 }

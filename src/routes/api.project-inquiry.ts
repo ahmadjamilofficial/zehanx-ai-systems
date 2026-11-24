@@ -74,7 +74,7 @@ export const Route = createFileRoute("/api/project-inquiry")({
           return Response.json({ error: "Please check the required fields and try again." }, { status: 400 });
         }
 
-        const inbox = process.env.LEADS_TO_EMAIL?.trim() || "zehanxtech@gmail.com";
+        const inbox = "zehanxtech@gmail.com";
         try {
           await sendGmailMessages([{
             to: inbox,

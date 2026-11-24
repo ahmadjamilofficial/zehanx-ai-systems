@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from "react";
 import { ArrowLeft, ArrowRight, Check, CheckCircle2 } from "lucide-react";
 import { Logo } from "@/components/site/navbar";
+import { EMAIL } from "@/lib/site";
 
 type ProjectDetails = {
   projectType: string;
@@ -130,8 +131,8 @@ export function ProjectPlanner() {
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      <main className="mx-auto flex min-h-[calc(100svh-1px)] w-full max-w-6xl flex-col px-5 pb-12 pt-28 sm:px-8 md:px-12 lg:px-16">
+    <div className="h-full min-h-0 bg-background text-foreground">
+      <main className="mx-auto h-full min-h-0 w-full max-w-6xl overflow-y-auto overscroll-y-contain px-5 pb-8 pt-28 sm:px-8 md:px-12 lg:px-16">
         <div className="mb-10 flex items-center justify-between gap-4">
           <a href="/" aria-label="ZehanX Tech home" className="inline-flex items-center gap-3 text-foreground transition-opacity hover:opacity-70"><Logo size={26} /><span className="font-pixel text-xs tracking-[0.2em] text-muted-foreground">ZEHANX TECH</span></a>
           <span className="font-pixel text-[10px] tracking-widest text-muted-foreground">PROJECT ENQUIRY / 2026</span>
@@ -143,7 +144,7 @@ export function ProjectPlanner() {
               <div className="mx-auto flex h-16 w-16 items-center justify-center border border-accent/50 bg-accent/10 text-accent"><CheckCircle2 size={30} /></div>
               <p className="mt-8 font-pixel text-xs tracking-[0.22em] text-accent">SUBMISSION RECEIVED</p>
               <h1 className="mt-5 text-4xl font-medium uppercase leading-[0.98] tracking-wide sm:text-5xl md:text-6xl">YOUR PROJECT<br /><span className="font-pixel text-[1.08em] font-normal">IS IN OUR HANDS.</span></h1>
-              <p className="mx-auto mt-7 max-w-xl text-sm leading-7 text-muted-foreground sm:text-base">Your project details have been sent to the ZehanX team. We'll review your requirements and get back to you within <strong className="font-semibold text-foreground">24 business hours</strong> at {details.email}.</p>
+              <p className="mx-auto mt-7 max-w-xl text-sm leading-7 text-muted-foreground sm:text-base">Your project details have been sent to the ZehanX team. We'll review your requirements and get back to you within <strong className="font-semibold text-foreground">24 business hours</strong> at {details.email}. For any follow-up, contact us at <a href={`mailto:${EMAIL}`} className="text-foreground underline underline-offset-4">{EMAIL}</a>.</p>
               <p className="mt-3 text-xs text-muted-foreground">No automated pitch. A member of our team will review your brief.</p>
               <a href="/" className="mt-9 inline-flex items-center gap-3 bg-primary px-6 py-3 text-xs font-semibold tracking-widest text-primary-foreground transition-opacity hover:opacity-85">BACK TO HOME <ArrowRight size={15} /></a>
             </div>
