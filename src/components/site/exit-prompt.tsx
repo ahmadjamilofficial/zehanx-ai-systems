@@ -49,15 +49,15 @@ export function ExitPrompt() {
         Still shaping an idea?
       </h2>
       <p id="exit-prompt-description" className="mt-2 text-sm leading-relaxed text-muted-foreground">
-        Turn the rough outline into a project brief, or talk directly with the team.
+        Answer a few focused questions and send your project brief directly to our team.
       </p>
       <div className="mt-4 flex flex-wrap gap-2">
         <a
-          href="/idea-studio"
+          href="/plan-project"
           onClick={() => setOpen(false)}
           className="bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground"
         >
-          OPEN IDEA STUDIO
+          PLAN YOUR PROJECT
         </a>
         <a
           href={CAL_URL}
